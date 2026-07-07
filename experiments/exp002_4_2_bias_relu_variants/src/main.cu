@@ -1,4 +1,4 @@
-#include "probes.cuh"
+#include "kernels.cuh"
 
 #include <algorithm>
 #include <cmath>

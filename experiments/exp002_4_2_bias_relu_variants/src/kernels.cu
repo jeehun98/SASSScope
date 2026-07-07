@@ -1,4 +1,4 @@
-#include "probes.cuh"
+#include "kernels.cuh"
 
 extern "C" __global__
 void linear_4_2_nobias_f32(

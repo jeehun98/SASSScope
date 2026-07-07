@@ -1,3 +1,16 @@
+param(
+    [string]$Experiment = "exp002_4_2_bias_relu_variants",
+    [string]$N = "32"
+)
+
 $ErrorActionPreference = "Stop"
-$exe = Join-Path $PSScriptRoot "..\build\sassscope.exe"
-& $exe 32
+
+$root = Resolve-Path (Join-Path $PSScriptRoot "..")
+$exe = Join-Path $root "build\experiments\$Experiment\$Experiment.exe"
+
+if (!(Test-Path $exe)) {
+    Write-Error "Executable not found: $exe"
+    exit 1
+}
+
+& $exe $N

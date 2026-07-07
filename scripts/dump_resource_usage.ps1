@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 $root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $exe = Join-Path $root "build\experiments\$Experiment\$Experiment.exe"
 $outDir = Join-Path $root "experiments\$Experiment\results"
-$out = Join-Path $outDir "ptx.txt"
+$out = Join-Path $outDir "resource_usage.txt"
 
 if (!(Test-Path $exe)) {
     Write-Error "Executable not found: $exe"
@@ -16,6 +16,6 @@ if (!(Test-Path $exe)) {
 
 New-Item -ItemType Directory -Force $outDir | Out-Null
 
-cuobjdump --dump-ptx $exe | Tee-Object -FilePath $out
+cuobjdump --dump-resource-usage $exe | Tee-Object -FilePath $out
 
 Write-Host "`nSaved: $out"
