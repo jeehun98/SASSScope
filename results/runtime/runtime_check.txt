@@ -1,0 +1,32 @@
+[timer_only]
+samples : 100
+min     : 3.000000000
+median  : 3.000000000
+mean    : 3.000000000
+max     : 3.000000000
+pstdev  : 0.000000000
+
+[dependent]
+samples : 100
+min     : 4.375434875
+median  : 4.375434875
+mean    : 4.375434875
+max     : 4.375434875
+pstdev  : 0.000000000
+
+[independent_8]
+samples : 100
+min     : 1.531700134
+median  : 1.531707764
+mean    : 1.531707611
+max     : 1.531707764
+pstdev  : 0.000001068
+
+[comparison]
+dependent median      : 4.375434875 cycles/instruction
+independent median    : 1.531707764 cycles/instruction
+median ratio          : 2.856572892
+relation dep > indep  : True
+
+[warnings]
+none

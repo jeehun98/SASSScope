@@ -1,0 +1,37 @@
+GPU                  : NVIDIA GeForce RTX 3060
+Compute capability   : sm_86
+SM count             : 28
+Warp size            : 32
+Reported clock rate  : 1837000 kHz
+CUDA driver version  : 13000
+CUDA runtime version : 13000
+Samples              : 100
+Warmups              : 10
+Instructions/probe   : 131072
+
+[Timer-only]
+Minimum            : 3.000000 cycles
+Median             : 3.000000 cycles
+Mean               : 3.000000 cycles
+Maximum            : 3.000000 cycles
+Standard deviation : 0.000000 cycles
+
+[Dependent FFMA]
+Minimum            : 4.375435 cycles/instruction
+Median             : 4.375435 cycles/instruction
+Mean               : 4.375435 cycles/instruction
+Maximum            : 4.375435 cycles/instruction
+Standard deviation : 0.000000 cycles/instruction
+
+[Independent FFMA (8 accumulators)]
+Minimum            : 1.531700 cycles/instruction
+Median             : 1.531708 cycles/instruction
+Mean               : 1.531708 cycles/instruction
+Maximum            : 1.531708 cycles/instruction
+Standard deviation : 0.000001 cycles/instruction
+
+[Comparison]
+Dependent/independent median ratio : 2.856573
+Dependent checksum                 : 1.031350
+Independent checksum               : 8.035650
+Checksums finite                   : true

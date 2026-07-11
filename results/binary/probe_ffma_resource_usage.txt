@@ -1,0 +1,62 @@
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,8]
+host = windows
+compile_size = 64bit
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu 
+
+Resource usage:
+ Common:
+  GLOBAL:0
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,8]
+host = windows
+compile_size = 64bit
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu
+
+Resource usage:
+ Common:
+  GLOBAL:0
+
+Fatbin ptx code:
+================
+arch = sm_86
+code version = [9,1]
+host = windows
+compile_size = 64bit
+compressed
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu
+ptxasOptions = -v --generate-line-info 
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,8]
+host = windows
+compile_size = 64bit
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu
+
+Resource usage:
+ Common:
+  GLOBAL:0
+ Function probe_independent_ffma_8:
+  REG:15 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:380 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function probe_dependent_ffma:
+  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:380 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function probe_timer_only:
+  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:380 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+Fatbin ptx code:
+================
+arch = sm_86
+code version = [9,1]
+host = windows
+compile_size = 64bit
+compressed
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu
+ptxasOptions = -v --generate-line-info 

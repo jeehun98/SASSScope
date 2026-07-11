@@ -1,0 +1,4 @@
+Wrote: C:\Users\as042\Downloads\SASSScope_sass_probe_example\SASSScope_sass_probe_example\results\binary\sass_summary.txt
+Wrote: C:\Users\as042\Downloads\SASSScope_sass_probe_example\SASSScope_sass_probe_example\results\binary\sass_summary.json
+Wrote: C:\Users\as042\Downloads\SASSScope_sass_probe_example\SASSScope_sass_probe_example\results\binary\probe_ffma_filtered.sass.txt
+Warnings: 2

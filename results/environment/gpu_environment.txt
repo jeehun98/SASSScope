@@ -1,0 +1,37 @@
+Thu Jul  9 13:18:41 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 581.80                 Driver Version: 581.80         CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3060      WDDM  |   00000000:0B:00.0  On |                  N/A |
+|  0%   50C    P8             21W /  170W |     924MiB /  12288MiB |     27%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            6692    C+G   ...xyewy\ShellExperienceHost.exe      N/A      |
+|    0   N/A  N/A            9180    C+G   C:\Windows\explorer.exe               N/A      |
+|    0   N/A  N/A            9696    C+G   ...yb3d8bbwe\Notepad\Notepad.exe      N/A      |
+|    0   N/A  N/A           10804    C+G   ..._cw5n1h2txyewy\SearchHost.exe      N/A      |
+|    0   N/A  N/A           10920    C+G   ...y\StartMenuExperienceHost.exe      N/A      |
+|    0   N/A  N/A           11028    C+G   ...ms\Microsoft VS Code\Code.exe      N/A      |
+|    0   N/A  N/A           11696    C+G   ...yb3d8bbwe\WindowsTerminal.exe      N/A      |
+|    0   N/A  N/A           12924    C+G   ...2p2nqsd0c76g0\app\ChatGPT.exe      N/A      |
+|    0   N/A  N/A           13492    C+G   ...5n1h2txyewy\TextInputHost.exe      N/A      |
+|    0   N/A  N/A           16680    C+G   ...0.3351.109\msedgewebview2.exe      N/A      |
+|    0   N/A  N/A           18612    C+G   ...s\Mozilla Firefox\firefox.exe      N/A      |
+|    0   N/A  N/A           19936    C+G   ...\cef.win64\steamwebhelper.exe      N/A      |
+|    0   N/A  N/A           20392    C+G   C:\Nexon\NexonPlug\NexonPlug.exe      N/A      |
+|    0   N/A  N/A           21680    C+G   ...rzrea0\XboxGameBarSpotify.exe      N/A      |
+|    0   N/A  N/A           21828    C+G   ...s\Mozilla Firefox\firefox.exe      N/A      |
+|    0   N/A  N/A           21932    C+G   ...t\Edge\Application\msedge.exe      N/A      |
+|    0   N/A  N/A           22308    C+G   ...iles\Riot Vanguard\vgtray.exe      N/A      |
+|    0   N/A  N/A           22476    C+G   ...s\Mozilla Firefox\firefox.exe      N/A      |
++-----------------------------------------------------------------------------------------+

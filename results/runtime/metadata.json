@@ -1,0 +1,14 @@
+{
+  "gpu_name": "NVIDIA GeForce RTX 3060",
+  "compute_capability": "sm_86",
+  "sm_count": 28,
+  "warp_size": 32,
+  "reported_clock_khz": 1837000,
+  "cuda_driver_version": 13000,
+  "cuda_runtime_version": 13000,
+  "outer_iterations": 4096,
+  "instructions_per_iteration": 32,
+  "total_instructions": 131072,
+  "samples": 100,
+  "warmups": 10
+}

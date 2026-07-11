@@ -1,84 +1,40 @@
-# SASSScope
+# SASSScope SASS Probe Example
 
-작은 신경망 계산이 CUDA C++ → PTX → SASS로 내려가며 어떤 형태로 바뀌는지 관찰하는 실험 프로젝트다.
+FFMA 의존 사슬과 8-way 독립 accumulator를 비교하는 최소 GPU 프로브다.
 
-첫 실험은 `4 → 2 → 4` MLP다.
-
-- 분리 실행: `Linear(4→2) + ReLU`, `Linear(2→4)`
-- 융합 실행: 전체를 단일 커널로 실행
-- CPU reference와 결과 비교
-- PTX/SASS dump
-- ptxas register 사용량 확인
-
-## 원칙
-
-- 범용 프레임워크를 만들지 않는다.
-- 큰 연산자를 먼저 정의하지 않는다.
-- 작은 고정 shape 계산을 먼저 관찰한다.
-- PTX와 SASS를 실제 근거로 기록한다.
-- 새로운 추상화는 관찰 후에 정의한다.
-
-## 환경
-
-- Windows 10/11
-- RTX 3080 Ti Laptop GPU
-- CUDA Toolkit 12.x
-- Visual Studio 2022 Build Tools
-- CMake 3.24+
-- Ninja
-
-RTX 3080 Ti Laptop GPU는 Ampere 계열이며 기본 CUDA architecture는 `86`이다.
-
-## 환경 확인
-
-Developer PowerShell for VS 2022에서:
+## 가장 빠른 실행
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/check_env.ps1
+powershell -ExecutionPolicy Bypass `
+  -File scripts\run_all.ps1 `
+  -Arch 86 `
+  -Samples 100 `
+  -Warmups 10 `
+  -Clean
 ```
 
-## 빌드
+단계별 진행은 `docs/process.md`, 오류 점검은 `docs/error_checklist.md`를 참고한다.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/build.ps1
-```
-
-빌드 로그의 `ptxas info`에서 커널별 register 사용량을 확인한다.
-
-## 실행
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/run.ps1
-```
-
-## PTX/SASS 추출
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/dump_ptx.ps1
-powershell -ExecutionPolicy Bypass -File scripts/dump_sass.ps1
-```
-
-결과:
+## 주요 검증 파일
 
 ```text
-artifacts/sassscope.ptx.txt
-artifacts/sassscope.sass.txt
+results/build/probe_ffma_build.txt
+results/binary/sass_summary.txt
+results/binary/probe_ffma_full.sass.txt
+results/binary/probe_ffma_resource_usage.txt
+results/runtime/runtime_summary.txt
+results/runtime/runtime_check.txt
 ```
 
-## 첫 관찰 항목
-
-다음 커널을 비교한다.
+## 현재 자동 검사
 
 ```text
-linear_4_2_relu_f32
-linear_2_4_f32
-linear_4_2_4_fused_f32
+목표 커널 3개 존재 여부
+FFMA 정적 개수
+CS2R 개수
+accumulator 레지스터 수
+측정 구간 내 LD/ST
+시작 타이머 뒤 setup 명령 가능성
+의존/독립 실행 cycle 관계
+checksum 유한성
 ```
-
-관찰 대상:
-
-- `LDG`, `STG`, `FFMA` 개수
-- ReLU가 `FMAX`, compare/select 중 무엇으로 내려가는지
-- 출력 4개 loop가 완전 unroll되는지
-- split 버전의 hidden store/load가 fused 버전에서 사라지는지
-- fused 버전의 register 사용량 증가

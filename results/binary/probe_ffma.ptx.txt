@@ -1,0 +1,1426 @@
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,8]
+host = windows
+compile_size = 64bit
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu 
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,8]
+host = windows
+compile_size = 64bit
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu
+
+Fatbin ptx code:
+================
+arch = sm_86
+code version = [9,1]
+host = windows
+compile_size = 64bit
+compressed
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu
+ptxasOptions = -v --generate-line-info 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.version 9.1
+
+.target sm_86
+
+.address_size 64
+
+
+
+
+
+
+
+
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,8]
+host = windows
+compile_size = 64bit
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu
+
+Fatbin ptx code:
+================
+arch = sm_86
+code version = [9,1]
+host = windows
+compile_size = 64bit
+compressed
+identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu
+ptxasOptions = -v --generate-line-info 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.version 9.1
+
+.target sm_86
+
+.address_size 64
+
+
+
+
+
+
+
+.visible .entry probe_timer_only(
+
+.param .u64 probe_timer_only_param_0,
+
+.param .u64 probe_timer_only_param_1,
+
+.param .f32 probe_timer_only_param_2,
+
+.param .f32 probe_timer_only_param_3,
+
+.param .f32 probe_timer_only_param_4
+
+)
+
+{
+
+.reg .pred %p<2>;
+
+.reg .f32 %f<10>;
+
+.reg .b32 %r<4>;
+
+.reg .b64 %rd<8>;
+
+.loc	1 70 0
+
+
+
+
+
+ld.param.u64 %rd1, [probe_timer_only_param_0];
+
+ld.param.u64 %rd2, [probe_timer_only_param_1];
+
+ld.param.f32 %f1, [probe_timer_only_param_2];
+
+ld.param.f32 %f2, [probe_timer_only_param_3];
+
+ld.param.f32 %f3, [probe_timer_only_param_4];
+
+.loc	1 76 5
+
+mov.u32 %r1, %ctaid.x;
+
+mov.u32 %r2, %tid.x;
+
+or.b32 %r3, %r2, %r1;
+
+setp.ne.s32 %p1, %r3, 0;
+
+@%p1 bra $L__BB0_2;
+
+
+
+cvta.to.global.u64 %rd5, %rd1;
+
+.loc	1 81 9
+
+.loc	1 38 5, function_name $L__info_string0, inlined_at 1 81 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 38 5
+
+
+
+
+
+
+
+
+
+.loc	1 39 5, function_name $L__info_string0, inlined_at 1 81 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 39 5
+
+
+
+
+
+
+
+
+
+.loc	1 40 5, function_name $L__info_string0, inlined_at 1 81 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 40 5
+
+
+
+
+
+
+
+
+
+.loc	1 41 5, function_name $L__info_string0, inlined_at 1 81 9
+
+.loc	1 26 5, function_name $L__info_string2, inlined_at 1 41 5
+
+
+
+mov.u64 %rd3, %clock64;
+
+
+
+.loc	1 83 9
+
+.loc	1 38 5, function_name $L__info_string0, inlined_at 1 83 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 38 5
+
+
+
+
+
+
+
+
+
+.loc	1 39 5, function_name $L__info_string0, inlined_at 1 83 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 39 5
+
+
+
+
+
+
+
+
+
+.loc	1 40 5, function_name $L__info_string0, inlined_at 1 83 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 40 5
+
+
+
+
+
+
+
+
+
+.loc	1 41 5, function_name $L__info_string0, inlined_at 1 83 9
+
+.loc	1 26 5, function_name $L__info_string2, inlined_at 1 41 5
+
+
+
+mov.u64 %rd4, %clock64;
+
+
+
+.loc	1 85 5
+
+sub.s64 %rd6, %rd4, %rd3;
+
+.loc	1 76 5
+
+cvta.to.global.u64 %rd7, %rd2;
+
+.loc	1 85 5
+
+st.global.u64 [%rd5], %rd6;
+
+.loc	1 86 5
+
+st.global.f32 [%rd7], %f1;
+
+
+
+$L__BB0_2:
+
+.loc	1 87 1
+
+ret;
+
+
+
+}
+
+
+
+.visible .entry probe_dependent_ffma(
+
+.param .u64 probe_dependent_ffma_param_0,
+
+.param .u64 probe_dependent_ffma_param_1,
+
+.param .f32 probe_dependent_ffma_param_2,
+
+.param .f32 probe_dependent_ffma_param_3,
+
+.param .f32 probe_dependent_ffma_param_4
+
+)
+
+{
+
+.reg .pred %p<3>;
+
+.reg .f32 %f<141>;
+
+.reg .b32 %r<8>;
+
+.reg .b64 %rd<13>;
+
+.loc	1 89 0
+
+
+
+
+
+ld.param.f32 %f140, [probe_dependent_ffma_param_2];
+
+ld.param.f32 %f4, [probe_dependent_ffma_param_3];
+
+ld.param.f32 %f5, [probe_dependent_ffma_param_4];
+
+.loc	1 95 5
+
+mov.u32 %r3, %tid.x;
+
+mov.u32 %r4, %ctaid.x;
+
+or.b32 %r5, %r3, %r4;
+
+setp.ne.s32 %p1, %r5, 0;
+
+@%p1 bra $L__BB1_4;
+
+
+
+.loc	1 104 9
+
+.loc	1 38 5, function_name $L__info_string0, inlined_at 1 104 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 38 5
+
+
+
+
+
+
+
+
+
+.loc	1 39 5, function_name $L__info_string0, inlined_at 1 104 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 39 5
+
+
+
+
+
+
+
+
+
+.loc	1 40 5, function_name $L__info_string0, inlined_at 1 104 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 40 5
+
+
+
+
+
+
+
+
+
+.loc	1 41 5, function_name $L__info_string0, inlined_at 1 104 9
+
+.loc	1 26 5, function_name $L__info_string2, inlined_at 1 41 5
+
+
+
+mov.u64 %rd6, %clock64;
+
+
+
+mov.u32 %r7, 0;
+
+
+
+$L__BB1_2:
+
+.pragma "nounroll";
+
+.loc	1 112 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 112 13
+
+
+
+fma.rn.f32 %f9, %f140, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f13, %f9, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f17, %f13, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f21, %f17, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f25, %f21, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f29, %f25, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f33, %f29, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f37, %f33, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f41, %f37, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f45, %f41, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f49, %f45, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f53, %f49, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f57, %f53, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f61, %f57, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f65, %f61, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f69, %f65, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f73, %f69, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f77, %f73, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f81, %f77, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f85, %f81, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f89, %f85, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f93, %f89, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f97, %f93, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f101, %f97, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f105, %f101, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f109, %f105, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f113, %f109, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f117, %f113, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f121, %f117, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f125, %f121, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f129, %f125, %f4, %f5;
+
+
+
+
+
+fma.rn.f32 %f140, %f129, %f4, %f5;
+
+
+
+.loc	1 107 63
+
+add.s32 %r7, %r7, 1;
+
+.loc	1 107 5
+
+setp.ne.s32 %p2, %r7, 4096;
+
+@%p2 bra $L__BB1_2;
+
+
+
+.loc	1 0 5
+
+ld.param.u64 %rd12, [probe_dependent_ffma_param_1];
+
+.loc	1 95 5
+
+cvta.to.global.u64 %rd11, %rd12;
+
+ld.param.u64 %rd10, [probe_dependent_ffma_param_0];
+
+cvta.to.global.u64 %rd9, %rd10;
+
+.loc	1 119 9
+
+.loc	1 38 5, function_name $L__info_string0, inlined_at 1 119 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 38 5
+
+
+
+
+
+
+
+
+
+.loc	1 39 5, function_name $L__info_string0, inlined_at 1 119 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 39 5
+
+
+
+
+
+
+
+
+
+.loc	1 40 5, function_name $L__info_string0, inlined_at 1 119 9
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 40 5
+
+
+
+
+
+
+
+
+
+.loc	1 41 5, function_name $L__info_string0, inlined_at 1 119 9
+
+.loc	1 26 5, function_name $L__info_string2, inlined_at 1 41 5
+
+
+
+mov.u64 %rd7, %clock64;
+
+
+
+.loc	1 121 5
+
+sub.s64 %rd8, %rd7, %rd6;
+
+st.global.u64 [%rd9], %rd8;
+
+.loc	1 122 5
+
+st.global.f32 [%rd11], %f140;
+
+
+
+$L__BB1_4:
+
+.loc	1 123 1
+
+ret;
+
+
+
+}
+
+
+
+.visible .entry probe_independent_ffma_8(
+
+.param .u64 probe_independent_ffma_8_param_0,
+
+.param .u64 probe_independent_ffma_8_param_1,
+
+.param .f32 probe_independent_ffma_8_param_2,
+
+.param .f32 probe_independent_ffma_8_param_3,
+
+.param .f32 probe_independent_ffma_8_param_4
+
+)
+
+{
+
+.reg .pred %p<3>;
+
+.reg .f32 %f<191>;
+
+.reg .b32 %r<8>;
+
+.reg .b64 %rd<9>;
+
+.loc	1 125 0
+
+
+
+
+
+ld.param.u64 %rd4, [probe_independent_ffma_8_param_0];
+
+ld.param.u64 %rd5, [probe_independent_ffma_8_param_1];
+
+ld.param.f32 %f25, [probe_independent_ffma_8_param_2];
+
+ld.param.f32 %f26, [probe_independent_ffma_8_param_3];
+
+ld.param.f32 %f27, [probe_independent_ffma_8_param_4];
+
+.loc	1 131 5
+
+mov.u32 %r3, %tid.x;
+
+mov.u32 %r4, %ctaid.x;
+
+or.b32 %r5, %r3, %r4;
+
+setp.ne.s32 %p1, %r5, 0;
+
+@%p1 bra $L__BB2_4;
+
+
+
+.loc	1 135 5
+
+add.f32 %f190, %f25, 0f38D1B717;
+
+.loc	1 144 5
+
+.loc	1 55 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 55 5
+
+
+
+
+
+
+
+
+
+.loc	1 136 5
+
+add.f32 %f189, %f25, 0f3951B717;
+
+.loc	1 56 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 56 5
+
+
+
+
+
+
+
+
+
+.loc	1 137 5
+
+add.f32 %f188, %f25, 0f399D4952;
+
+.loc	1 57 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 57 5
+
+
+
+
+
+
+
+
+
+.loc	1 138 5
+
+add.f32 %f187, %f25, 0f39D1B717;
+
+.loc	1 58 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 58 5
+
+
+
+
+
+
+
+
+
+.loc	1 139 5
+
+add.f32 %f186, %f25, 0f3A03126F;
+
+.loc	1 59 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 59 5
+
+
+
+
+
+
+
+
+
+.loc	1 140 5
+
+add.f32 %f185, %f25, 0f3A1D4952;
+
+.loc	1 60 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 60 5
+
+
+
+
+
+
+
+
+
+.loc	1 141 5
+
+add.f32 %f184, %f25, 0f3A378034;
+
+.loc	1 61 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 61 5
+
+
+
+
+
+
+
+
+
+.loc	1 142 5
+
+add.f32 %f183, %f25, 0f3A51B717;
+
+.loc	1 62 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 62 5
+
+
+
+
+
+
+
+
+
+.loc	1 63 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 63 5
+
+
+
+
+
+
+
+
+
+.loc	1 64 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 64 5
+
+
+
+
+
+
+
+
+
+.loc	1 65 5, function_name $L__info_string4, inlined_at 1 144 5
+
+.loc	1 26 5, function_name $L__info_string2, inlined_at 1 65 5
+
+
+
+mov.u64 %rd6, %clock64;
+
+
+
+.loc	1 131 5
+
+cvta.to.global.u64 %rd2, %rd4;
+
+cvta.to.global.u64 %rd3, %rd5;
+
+mov.u32 %r7, 0;
+
+
+
+$L__BB2_2:
+
+.pragma "nounroll";
+
+.loc	1 151 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 151 13
+
+
+
+fma.rn.f32 %f38, %f190, %f26, %f27;
+
+
+
+.loc	1 152 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 152 13
+
+
+
+fma.rn.f32 %f42, %f189, %f26, %f27;
+
+
+
+.loc	1 153 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 153 13
+
+
+
+fma.rn.f32 %f46, %f188, %f26, %f27;
+
+
+
+.loc	1 154 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 154 13
+
+
+
+fma.rn.f32 %f50, %f187, %f26, %f27;
+
+
+
+.loc	1 155 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 155 13
+
+
+
+fma.rn.f32 %f54, %f186, %f26, %f27;
+
+
+
+.loc	1 156 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 156 13
+
+
+
+fma.rn.f32 %f58, %f185, %f26, %f27;
+
+
+
+.loc	1 157 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 157 13
+
+
+
+fma.rn.f32 %f62, %f184, %f26, %f27;
+
+
+
+.loc	1 158 13
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 158 13
+
+
+
+fma.rn.f32 %f66, %f183, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 151 13
+
+
+
+fma.rn.f32 %f70, %f38, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 152 13
+
+
+
+fma.rn.f32 %f74, %f42, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 153 13
+
+
+
+fma.rn.f32 %f78, %f46, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 154 13
+
+
+
+fma.rn.f32 %f82, %f50, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 155 13
+
+
+
+fma.rn.f32 %f86, %f54, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 156 13
+
+
+
+fma.rn.f32 %f90, %f58, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 157 13
+
+
+
+fma.rn.f32 %f94, %f62, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 158 13
+
+
+
+fma.rn.f32 %f98, %f66, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 151 13
+
+
+
+fma.rn.f32 %f102, %f70, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 152 13
+
+
+
+fma.rn.f32 %f106, %f74, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 153 13
+
+
+
+fma.rn.f32 %f110, %f78, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 154 13
+
+
+
+fma.rn.f32 %f114, %f82, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 155 13
+
+
+
+fma.rn.f32 %f118, %f86, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 156 13
+
+
+
+fma.rn.f32 %f122, %f90, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 157 13
+
+
+
+fma.rn.f32 %f126, %f94, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 158 13
+
+
+
+fma.rn.f32 %f130, %f98, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 151 13
+
+
+
+fma.rn.f32 %f190, %f102, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 152 13
+
+
+
+fma.rn.f32 %f189, %f106, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 153 13
+
+
+
+fma.rn.f32 %f188, %f110, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 154 13
+
+
+
+fma.rn.f32 %f187, %f114, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 155 13
+
+
+
+fma.rn.f32 %f186, %f118, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 156 13
+
+
+
+fma.rn.f32 %f185, %f122, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 157 13
+
+
+
+fma.rn.f32 %f184, %f126, %f26, %f27;
+
+
+
+.loc	1 10 5, function_name $L__info_string3, inlined_at 1 158 13
+
+
+
+fma.rn.f32 %f183, %f130, %f26, %f27;
+
+
+
+.loc	1 148 63
+
+add.s32 %r7, %r7, 1;
+
+.loc	1 148 5
+
+setp.ne.s32 %p2, %r7, 4096;
+
+@%p2 bra $L__BB2_2;
+
+
+
+.loc	1 162 5
+
+.loc	1 55 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 55 5
+
+
+
+
+
+
+
+
+
+.loc	1 56 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 56 5
+
+
+
+
+
+
+
+
+
+.loc	1 57 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 57 5
+
+
+
+
+
+
+
+
+
+.loc	1 58 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 58 5
+
+
+
+
+
+
+
+
+
+.loc	1 59 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 59 5
+
+
+
+
+
+
+
+
+
+.loc	1 60 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 60 5
+
+
+
+
+
+
+
+
+
+.loc	1 61 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 61 5
+
+
+
+
+
+
+
+
+
+.loc	1 62 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 62 5
+
+
+
+
+
+
+
+
+
+.loc	1 63 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 63 5
+
+
+
+
+
+
+
+
+
+.loc	1 64 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 21 5, function_name $L__info_string1, inlined_at 1 64 5
+
+
+
+
+
+
+
+
+
+.loc	1 65 5, function_name $L__info_string4, inlined_at 1 162 5
+
+.loc	1 26 5, function_name $L__info_string2, inlined_at 1 65 5
+
+
+
+mov.u64 %rd7, %clock64;
+
+
+
+.loc	1 165 5
+
+sub.s64 %rd8, %rd7, %rd6;
+
+.loc	1 169 5
+
+add.f32 %f176, %f190, %f189;
+
+add.f32 %f177, %f176, %f188;
+
+add.f32 %f178, %f177, %f187;
+
+add.f32 %f179, %f178, %f186;
+
+add.f32 %f180, %f179, %f185;
+
+add.f32 %f181, %f180, %f184;
+
+add.f32 %f182, %f181, %f183;
+
+.loc	1 165 5
+
+st.global.u64 [%rd2], %rd8;
+
+.loc	1 169 5
+
+st.global.f32 [%rd3], %f182;
+
+
+
+$L__BB2_4:
+
+.loc	1 170 1
+
+ret;
+
+
+
+}
+
+.file	1 "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src\\probe_kernels.cu"
+
+.section	.debug_str
+
+{
+
+$L__info_string0:
+
+.b8 95,90,78,52,55,95,73,78,84,69,82,78,65,76,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114,111,98,101,95,107,101,114,110,101,108,115
+
+.b8 95,99,117,95,100,50,54,48,50,57,101,56,52,57,95,71,76,79,66,65,76,95,95,78,95,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114
+
+.b8 111,98,101,95,107,101,114,110,101,108,115,95,99,117,95,100,50,54,48,50,57,101,56,49,56,114,101,97,100,95,99,108,111,99,107,95,97,102,116,101
+
+.b8 114,95,51,69,102,102,102,0
+
+$L__info_string1:
+
+.b8 95,90,78,52,55,95,73,78,84,69,82,78,65,76,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114,111,98,101,95,107,101,114,110,101,108,115
+
+.b8 95,99,117,95,100,50,54,48,50,57,101,56,52,57,95,71,76,79,66,65,76,95,95,78,95,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114
+
+.b8 111,98,101,95,107,101,114,110,101,108,115,95,99,117,95,100,50,54,48,50,57,101,56,49,50,99,111,109,112,105,108,101,114,95,117,115,101,69,102,0
+
+$L__info_string2:
+
+.b8 95,90,78,52,55,95,73,78,84,69,82,78,65,76,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114,111,98,101,95,107,101,114,110,101,108,115
+
+.b8 95,99,117,95,100,50,54,48,50,57,101,56,52,57,95,71,76,79,66,65,76,95,95,78,95,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114
+
+.b8 111,98,101,95,107,101,114,110,101,108,115,95,99,117,95,100,50,54,48,50,57,101,56,49,54,114,101,97,100,95,99,108,111,99,107,54,52,95,114,97
+
+.b8 119,69,118,0
+
+$L__info_string3:
+
+.b8 95,90,78,52,55,95,73,78,84,69,82,78,65,76,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114,111,98,101,95,107,101,114,110,101,108,115
+
+.b8 95,99,117,95,100,50,54,48,50,57,101,56,52,57,95,71,76,79,66,65,76,95,95,78,95,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114
+
+.b8 111,98,101,95,107,101,114,110,101,108,115,95,99,117,95,100,50,54,48,50,57,101,56,56,102,102,109,97,95,112,116,120,69,102,102,102,0
+
+$L__info_string4:
+
+.b8 95,90,78,52,55,95,73,78,84,69,82,78,65,76,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114,111,98,101,95,107,101,114,110,101,108,115
+
+.b8 95,99,117,95,100,50,54,48,50,57,101,56,52,57,95,71,76,79,66,65,76,95,95,78,95,95,100,52,54,57,101,98,56,55,95,49,54,95,112,114
+
+.b8 111,98,101,95,107,101,114,110,101,108,115,95,99,117,95,100,50,54,48,50,57,101,56,49,57,114,101,97,100,95,99,108,111,99,107,95,97,102,116,101
+
+.b8 114,95,49,48,69,102,102,102,102,102,102,102,102,102,102,0
+
+
+
+}
+
+
