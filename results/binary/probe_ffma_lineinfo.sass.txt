@@ -1,5 +1,4 @@
-	.target	sm_86
-
+	.headerflags	@"EF_CUDA_TEXMODE_UNIFIED EF_CUDA_64BIT_ADDRESS EF_CUDA_SM86 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM86)"
 	.elftype	@"ET_EXEC"
 
 
@@ -17,43 +16,43 @@
         .other          probe_independent_ffma_8,@"STO_CUDA_ENTRY STV_DEFAULT"
 probe_independent_ffma_8:
 .text.probe_independent_ffma_8:
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 125
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 125
         /*0000*/                   MOV R1, c[0x0][0x28] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 131
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 131
         /*0010*/                   S2UR UR4, SR_CTAID.X ;
         /*0020*/                   S2R R0, SR_TID.X ;
         /*0030*/                   LOP3.LUT P0, RZ, R0, UR4, RZ, 0xfc, !PT ;
         /*0040*/               @P0 EXIT ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 135
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 135
         /*0050*/                   MOV R12, c[0x0][0x170] ;
         /*0060*/                   FADD R0, R12.reuse, 9.9999997473787516356e-05 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 136
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 136
         /*0070*/                   FADD R5, R12.reuse, 0.00019999999494757503271 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 137
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 137
         /*0080*/                   FADD R4, R12.reuse, 0.00030000001424923539162 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 138
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 138
         /*0090*/                   FADD R8, R12.reuse, 0.00039999998989515006542 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 139
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 139
         /*00a0*/                   FADD R9, R12.reuse, 0.00050000002374872565269 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 140
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 140
         /*00b0*/                   FADD R10, R12.reuse, 0.00060000002849847078323 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 141
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 141
         /*00c0*/                   FADD R11, R12.reuse, 0.00069999997504055500031 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 142
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 142
         /*00d0*/                   FADD R12, R12, 0.00079999997979030013084 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 26
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 26
         /*00e0*/                   CS2R R2, SR_CLOCKLO ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 131
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 131
         /*00f0*/                   MOV R6, RZ ;
         /*0100*/                   ULDC.64 UR4, c[0x0][0x118] ;
 .L_x_0:
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 148
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 148
         /*0110*/                   IADD3 R6, R6, 0x1, RZ ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 10
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 10
         /*0120*/                   MOV R7, c[0x0][0x174] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 148
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 148
         /*0130*/                   ISETP.NE.AND P0, PT, R6, 0x1000, PT ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 10
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 10
         /*0140*/                   FFMA R0, R0, R7.reuse, c[0x0][0x178] ;
         /*0150*/                   FFMA R5, R5, R7.reuse, c[0x0][0x178] ;
         /*0160*/                   FFMA R4, R4, R7.reuse, c[0x0][0x178] ;
@@ -86,35 +85,35 @@ probe_independent_ffma_8:
         /*0310*/                   FFMA R10, R10, R7.reuse, c[0x0][0x178] ;
         /*0320*/                   FFMA R11, R11, R7.reuse, c[0x0][0x178] ;
         /*0330*/                   FFMA R12, R12, R7, c[0x0][0x178] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 148
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 148
         /*0340*/               @P0 BRA `(.L_x_0) ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 26
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 26
         /*0350*/                   CS2R R6, SR_CLOCKLO ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 169
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 169
         /*0360*/                   FADD R5, R0, R5 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 165
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 165
         /*0370*/                   IADD3 R6, P0, -R2, R6, RZ ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 169
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 169
         /*0380*/                   MOV R2, c[0x0][0x168] ;
         /*0390*/                   FADD R5, R4, R5 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 165
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 165
         /*03a0*/                   MOV R4, c[0x0][0x160] ;
         /*03b0*/                   IADD3.X R7, ~R3, R7, RZ, P0, !PT ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 169
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 169
         /*03c0*/                   FADD R8, R8, R5 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 165
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 165
         /*03d0*/                   MOV R5, c[0x0][0x164] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 169
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 169
         /*03e0*/                   MOV R3, c[0x0][0x16c] ;
         /*03f0*/                   FADD R9, R9, R8 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 165
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 165
         /*0400*/                   STG.E.64 [R4.64], R6 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 169
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 169
         /*0410*/                   FADD R10, R10, R9 ;
         /*0420*/                   FADD R11, R11, R10 ;
         /*0430*/                   FADD R11, R12, R11 ;
         /*0440*/                   STG.E [R2.64], R11 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 170
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 170
         /*0450*/                   EXIT ;
 .L_x_1:
         /*0460*/                   BRA `(.L_x_1);
@@ -144,28 +143,28 @@ probe_independent_ffma_8:
         .other          probe_dependent_ffma,@"STO_CUDA_ENTRY STV_DEFAULT"
 probe_dependent_ffma:
 .text.probe_dependent_ffma:
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 89
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 89
         /*0000*/                   MOV R1, c[0x0][0x28] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 95
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 95
         /*0010*/                   S2UR UR4, SR_CTAID.X ;
         /*0020*/                   S2R R0, SR_TID.X ;
         /*0030*/                   MOV R9, c[0x0][0x170] ;
         /*0040*/                   LOP3.LUT P0, RZ, R0, UR4, RZ, 0xfc, !PT ;
         /*0050*/               @P0 EXIT ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 26
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 26
         /*0060*/                   CS2R R2, SR_CLOCKLO ;
         /*0070*/                   MOV R4, RZ ;
         /*0080*/                   ULDC.64 UR4, c[0x0][0x118] ;
 .L_x_2:
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 10
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 10
         /*0090*/                   MOV R0, c[0x0][0x174] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 107
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 107
         /*00a0*/                   IADD3 R4, R4, 0x1, RZ ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 10
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 10
         /*00b0*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 107
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 107
         /*00c0*/                   ISETP.NE.AND P0, PT, R4, 0x1000, PT ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 10
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 10
         /*00d0*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
         /*00e0*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
         /*00f0*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
@@ -197,23 +196,23 @@ probe_dependent_ffma:
         /*0290*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
         /*02a0*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
         /*02b0*/                   FFMA R9, R9, R0, c[0x0][0x178] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 107
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 107
         /*02c0*/               @P0 BRA `(.L_x_2) ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 26
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 26
         /*02d0*/                   CS2R R4, SR_CLOCKLO ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 121
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 121
         /*02e0*/                   IADD3 R6, P0, -R2, R4, RZ ;
         /*02f0*/                   MOV R2, c[0x0][0x160] ;
         /*0300*/                   IADD3.X R7, ~R3, R5, RZ, P0, !PT ;
         /*0310*/                   MOV R3, c[0x0][0x164] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 122
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 122
         /*0320*/                   MOV R4, c[0x0][0x168] ;
         /*0330*/                   MOV R5, c[0x0][0x16c] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 121
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 121
         /*0340*/                   STG.E.64 [R2.64], R6 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 122
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 122
         /*0350*/                   STG.E [R4.64], R9 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 123
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 123
         /*0360*/                   EXIT ;
 .L_x_3:
         /*0370*/                   BRA `(.L_x_3);
@@ -242,35 +241,35 @@ probe_dependent_ffma:
         .other          probe_timer_only,@"STO_CUDA_ENTRY STV_DEFAULT"
 probe_timer_only:
 .text.probe_timer_only:
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 70
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 70
         /*0000*/                   IMAD.MOV.U32 R1, RZ, RZ, c[0x0][0x28] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 76
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 76
         /*0010*/                   S2UR UR4, SR_CTAID.X ;
         /*0020*/                   S2R R0, SR_TID.X ;
         /*0030*/                   LOP3.LUT P0, RZ, R0, UR4, RZ, 0xfc, !PT ;
         /*0040*/               @P0 EXIT ;
         /*0050*/                   ULDC.64 UR4, c[0x0][0x118] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 26
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 26
         /*0060*/                   CS2R R2, SR_CLOCKLO ;
         /*0070*/                   CS2R R4, SR_CLOCKLO ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 85
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 85
         /*0080*/                   IADD3 R6, P0, -R2, R4, RZ ;
         /*0090*/                   MOV R2, c[0x0][0x160] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 86
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 86
         /*00a0*/                   MOV R9, c[0x0][0x170] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 85
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 85
         /*00b0*/                   IMAD.X R7, R5, 0x1, ~R3, P0 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 86
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 86
         /*00c0*/                   MOV R4, c[0x0][0x168] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 85
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 85
         /*00d0*/                   IMAD.MOV.U32 R3, RZ, RZ, c[0x0][0x164] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 86
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 86
         /*00e0*/                   IMAD.MOV.U32 R5, RZ, RZ, c[0x0][0x16c] ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 85
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 85
         /*00f0*/                   STG.E.64 [R2.64], R6 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 86
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 86
         /*0100*/                   STG.E [R4.64], R9 ;
-	//## File "C:\\Users\\as042\\Downloads\\SASSScope_sass_probe_example\\SASSScope_sass_probe_example\\src/probe_kernels.cu", line 87
+	//## File "C:\\Users\\owner\\Desktop\\SASSScope\\src/probe_kernels.cu", line 87
         /*0110*/                   EXIT ;
 .L_x_4:
         /*0120*/                   BRA `(.L_x_4);

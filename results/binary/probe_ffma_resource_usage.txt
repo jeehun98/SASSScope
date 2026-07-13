@@ -2,10 +2,10 @@
 Fatbin elf code:
 ================
 arch = sm_86
-code version = [1,8]
+code version = [1,7]
 host = windows
 compile_size = 64bit
-identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu 
+identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu 
 
 Resource usage:
  Common:
@@ -14,10 +14,10 @@ Resource usage:
 Fatbin elf code:
 ================
 arch = sm_86
-code version = [1,8]
+code version = [1,7]
 host = windows
 compile_size = 64bit
-identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu
+identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu
 
 Resource usage:
  Common:
@@ -26,20 +26,20 @@ Resource usage:
 Fatbin ptx code:
 ================
 arch = sm_86
-code version = [9,1]
+code version = [8,5]
 host = windows
 compile_size = 64bit
 compressed
-identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/main.cu
+identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu
 ptxasOptions = -v --generate-line-info 
 
 Fatbin elf code:
 ================
 arch = sm_86
-code version = [1,8]
+code version = [1,7]
 host = windows
 compile_size = 64bit
-identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu
+identifier = C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu
 
 Resource usage:
  Common:
@@ -54,9 +54,9 @@ Resource usage:
 Fatbin ptx code:
 ================
 arch = sm_86
-code version = [9,1]
+code version = [8,5]
 host = windows
 compile_size = 64bit
 compressed
-identifier = C:/Users/as042/Downloads/SASSScope_sass_probe_example/SASSScope_sass_probe_example/src/probe_kernels.cu
+identifier = C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu
 ptxasOptions = -v --generate-line-info 

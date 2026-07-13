@@ -1,0 +1,4 @@
+run,kernel,total_instructions,total_cycles,cycles_per_instruction,checksum
+0,timer_only,0,3,,1.00010001659
+0,dependent,131072,573512,4.37554931641,1.03135001659
+0,independent_8,131072,200779,1.53182220459,8.0356502533

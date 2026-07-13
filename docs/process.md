@@ -72,9 +72,7 @@ FFMA 프로브에서는 spill load/store가 0이어야 한다.
 ## 4. PTX·SASS·리소스 출력
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-  -File scripts\collect_binary_outputs.ps1 `
-  -Arch 86
+powershell -ExecutionPolicy Bypass   -File scripts\collect_binary_outputs.ps1   -Arch 86
 ```
 
 생성 파일:
@@ -112,10 +110,7 @@ probe_independent_ffma_8
 ## 5. 반복 실행
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-  -File scripts\run_probe.ps1 `
-  -Samples 100 `
-  -Warmups 10
+powershell -ExecutionPolicy Bypass   -File scripts\run_probe.ps1   -Samples 100   -Warmups 10
 ```
 
 생성 파일:
@@ -168,22 +163,11 @@ results/profiler/probe_ffma_ncu_sass.txt
 Nsight Compute 제외:
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-  -File scripts\run_all.ps1 `
-  -Arch 86 `
-  -Samples 100 `
-  -Warmups 10 `
-  -Clean
+powershell -ExecutionPolicy Bypass   -File scripts\run_all.ps1   -Arch 86   -Samples 100   -Warmups 10   -Clean
 ```
 
 Nsight Compute 포함:
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-  -File scripts\run_all.ps1 `
-  -Arch 86 `
-  -Samples 100 `
-  -Warmups 10 `
-  -Clean `
-  -WithNcu
+powershell -ExecutionPolicy Bypass   -File scripts\run_all.ps1   -Arch 86   -Samples 100   -Warmups 10   -Clean   -WithNcu
 ```

@@ -1,5 +1,4 @@
-	.target	sm_86
-
+	.headerflags	@"EF_CUDA_TEXMODE_UNIFIED EF_CUDA_64BIT_ADDRESS EF_CUDA_SM86 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM86)"
 	.elftype	@"ET_EXEC"
 
 

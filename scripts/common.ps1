@@ -118,29 +118,60 @@ function Invoke-NativeCapture {
         throw "Output path is null or empty."
     }
 
-    $commandInfo = Get-Command $Command -ErrorAction SilentlyContinue
+    # 네이티브 실행 파일만 검색
+    $commandInfo = Get-Command `
+        $Command `
+        -CommandType Application `
+        -ErrorAction SilentlyContinue |
+        Select-Object -First 1
 
     if ($null -eq $commandInfo) {
-        throw "Command not found: $Command"
+        throw "Native command not found: $Command"
+    }
+
+    $resolvedCommand = $commandInfo.Path
+
+    if ([string]::IsNullOrWhiteSpace($resolvedCommand)) {
+        $resolvedCommand = $Command
     }
 
     if ($Arguments.Count -gt 0) {
-        $displayCommand = "$Command $($Arguments -join ' ')"
+        $displayCommand = "$resolvedCommand $($Arguments -join ' ')"
     }
     else {
-        $displayCommand = $Command
+        $displayCommand = $resolvedCommand
     }
 
     Write-Host "`n> $displayCommand" -ForegroundColor Cyan
 
-    $lines = @(
-        & $Command @Arguments 2>&1 |
-            ForEach-Object {
-                [string]$_
-            }
-    )
+    $lines = @()
+    $exitCode = -1
 
-    $exitCode = $LASTEXITCODE
+    # 네이티브 프로그램의 stderr가 PowerShell 실행을 중단하지 않도록
+    # 이 구간에서만 ErrorActionPreference를 Continue로 변경
+    $previousErrorActionPreference = $ErrorActionPreference
+
+    try {
+        $ErrorActionPreference = "Continue"
+
+        $lines = @(
+            & $resolvedCommand @Arguments 2>&1 |
+                ForEach-Object {
+                    if ($_ -is [System.Management.Automation.ErrorRecord]) {
+                        [string]$_.Exception.Message
+                    }
+                    else {
+                        [string]$_
+                    }
+                }
+        )
+
+        # 반드시 네이티브 프로세스 실행 직후 저장
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
 
     foreach ($line in $lines) {
         Write-Host $line
@@ -151,14 +182,19 @@ function Invoke-NativeCapture {
         -Lines $lines
 
     if (($exitCode -ne 0) -and (-not $AllowFailure)) {
-        throw "Command failed with exit code $exitCode. See: $OutputPath"
+        throw (
+            "Command failed with exit code {0}. See: {1}" -f `
+                $exitCode,
+                $OutputPath
+        )
     }
 
     return [PSCustomObject]@{
-        Command    = $Command
-        Arguments  = $Arguments
-        ExitCode   = $exitCode
-        Lines      = $lines
-        OutputPath = $OutputPath
+        Command         = $Command
+        ResolvedCommand = $resolvedCommand
+        Arguments       = $Arguments
+        ExitCode        = $exitCode
+        Lines           = $lines
+        OutputPath      = $OutputPath
     }
 }

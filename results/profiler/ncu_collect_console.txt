@@ -1,0 +1,56 @@
+==PROF== Connected to process 28264 (C:\Users\owner\Desktop\SASSScope\build\probe_ffma.exe)
+==PROF== Profiling "probe_timer_only" - 0: 0%....50%....100% - 43 passes
+==PROF== Profiling "probe_dependent_ffma" - 1: 0%....50%....100% - 43 passes
+==PROF== Profiling "probe_independent_ffma_8" - 2: 0%....50%....100% - 43 passes
+GPU                  : NVIDIA GeForce RTX 3080 Ti Laptop GPU
+Compute capability   : sm_86
+SM count             : 58
+Warp size            : 32
+Reported clock rate  : 1125000 kHz
+CUDA driver version  : 13000
+CUDA runtime version : 12060
+Samples              : 1
+Warmups              : 0
+Instructions/probe   : 131072
+
+[Timer-only]
+Minimum            : 3.000000 cycles
+Median             : 3.000000 cycles
+Mean               : 3.000000 cycles
+Maximum            : 3.000000 cycles
+Standard deviation : 0.000000 cycles
+
+[Dependent FFMA]
+Minimum            : 4.375549 cycles/instruction
+Median             : 4.375549 cycles/instruction
+Mean               : 4.375549 cycles/instruction
+Maximum            : 4.375549 cycles/instruction
+Standard deviation : 0.000000 cycles/instruction
+
+[Independent FFMA (8 accumulators)]
+Minimum            : 1.531822 cycles/instruction
+Median             : 1.531822 cycles/instruction
+Mean               : 1.531822 cycles/instruction
+Maximum            : 1.531822 cycles/instruction
+Standard deviation : 0.000000 cycles/instruction
+
+[Comparison]
+Dependent/independent median ratio : 2.856434
+Dependent checksum                 : 1.031350
+Independent checksum               : 8.035650
+Checksums finite                   : true
+
+Results written to: C:\Users\owner\Desktop\SASSScope\results\profiler\runtime
+==PROF== Disconnected from process 28264
+==PROF== Report: C:\Users\owner\Desktop\SASSScope\results\profiler\probe_ffma_profile.ncu-rep
+Traceback (most recent call last):
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1176, in exec_module
+  File "<frozen site>", line 635, in <module>
+  File "<frozen site>", line 621, in main
+  File "<frozen site>", line 364, in addusersitepackages
+  File "<frozen site>", line 247, in addsitedir
+  File "<frozen site>", line 190, in addpackage
+LookupError: unknown encoding: utf-8-sig

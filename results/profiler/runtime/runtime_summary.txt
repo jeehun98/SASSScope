@@ -5,8 +5,8 @@ Warp size            : 32
 Reported clock rate  : 1125000 kHz
 CUDA driver version  : 13000
 CUDA runtime version : 12060
-Samples              : 100
-Warmups              : 10
+Samples              : 1
+Warmups              : 0
 Instructions/probe   : 131072
 
 [Timer-only]
@@ -17,21 +17,21 @@ Maximum            : 3.000000 cycles
 Standard deviation : 0.000000 cycles
 
 [Dependent FFMA]
-Minimum            : 4.375557 cycles/instruction
-Median             : 4.375557 cycles/instruction
-Mean               : 4.375557 cycles/instruction
-Maximum            : 4.375557 cycles/instruction
+Minimum            : 4.375549 cycles/instruction
+Median             : 4.375549 cycles/instruction
+Mean               : 4.375549 cycles/instruction
+Maximum            : 4.375549 cycles/instruction
 Standard deviation : 0.000000 cycles/instruction
 
 [Independent FFMA (8 accumulators)]
 Minimum            : 1.531822 cycles/instruction
-Median             : 1.531830 cycles/instruction
-Mean               : 1.531830 cycles/instruction
-Maximum            : 1.531830 cycles/instruction
-Standard deviation : 0.000001 cycles/instruction
+Median             : 1.531822 cycles/instruction
+Mean               : 1.531822 cycles/instruction
+Maximum            : 1.531822 cycles/instruction
+Standard deviation : 0.000000 cycles/instruction
 
 [Comparison]
-Dependent/independent median ratio : 2.856425
+Dependent/independent median ratio : 2.856434
 Dependent checksum                 : 1.031350
 Independent checksum               : 8.035650
 Checksums finite                   : true

@@ -8,24 +8,24 @@ pstdev  : 0.000000000
 
 [dependent]
 samples : 100
-min     : 4.375434875
-median  : 4.375434875
-mean    : 4.375434875
-max     : 4.375434875
+min     : 4.375556946
+median  : 4.375556946
+mean    : 4.375556946
+max     : 4.375556946
 pstdev  : 0.000000000
 
 [independent_8]
 samples : 100
-min     : 1.531700134
-median  : 1.531707764
-mean    : 1.531707611
-max     : 1.531707764
-pstdev  : 0.000001068
+min     : 1.531822205
+median  : 1.531829834
+mean    : 1.531829758
+max     : 1.531829834
+pstdev  : 0.000000759
 
 [comparison]
-dependent median      : 4.375434875 cycles/instruction
-independent median    : 1.531707764 cycles/instruction
-median ratio          : 2.856572892
+dependent median      : 4.375556946 cycles/instruction
+independent median    : 1.531829834 cycles/instruction
+median ratio          : 2.856424943
 relation dep > indep  : True
 
 [warnings]
