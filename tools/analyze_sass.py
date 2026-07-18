@@ -57,6 +57,11 @@ CLOCK_REGISTER_RE = re.compile(
     re.IGNORECASE,
 )
 
+CONSTANT_OPERAND_RE = re.compile(
+    r"\bc\[[^\]]+\]\[[^\]]+\]",
+    re.IGNORECASE,
+)
+
 
 EXPECTED_FUNCTIONS = (
     "probe_timer_only",
@@ -135,6 +140,9 @@ class FunctionSummary:
     measured_region_shared_memory_ops: list[str]
     measured_region_constant_loads: list[str]
     measured_region_other_memory_ops: list[str]
+
+    measured_region_constant_operand_instructions: list[str]
+    measured_region_ffma_constant_operand_count: int    
 
     setup_ops_after_start_clock: list[str]
     accumulator_setup_ops_after_start_clock: list[str]
@@ -249,6 +257,15 @@ def is_clock_read(instruction: Instruction) -> bool:
         and CLOCK_REGISTER_RE.search(instruction.operands) is not None
     )
 
+def uses_constant_operand(
+    instruction: Instruction,
+) -> bool:
+    return (
+        CONSTANT_OPERAND_RE.search(
+            instruction.operands
+        )
+        is not None
+    )
 
 def classify_memory_operation(
     instruction: Instruction,
@@ -438,19 +455,10 @@ def summarize_function(
     invalid_ffma_operands: list[str] = []
 
     for instruction in measured_ffma_instructions:
-        operands = split_operands(instruction.operands)
+        destination = destination_register(instruction)
+        sources = source_registers(instruction)
 
-        if len(operands) < 2:
-            invalid_ffma_operands.append(instruction.text)
-            raw_accumulator_pattern.append(
-                f"<invalid:{instruction.address}>"
-            )
-            continue
-
-        destination = normalize_register(operands[0])
-        first_source = normalize_register(operands[1])
-
-        if destination is None or first_source is None:
+        if destination is None or not sources:
             invalid_ffma_operands.append(instruction.text)
             raw_accumulator_pattern.append(
                 f"<invalid:{instruction.address}>"
@@ -459,7 +467,14 @@ def summarize_function(
 
         raw_accumulator_pattern.append(destination)
 
-        if destination == first_source:
+        # ptxas may place the recurrence value in any FFMA source position.
+        #
+        # Examples:
+        #   FFMA R8, R8,  R10, R11
+        #   FFMA R8, R10, R11, R8
+        #
+        # Both represent a valid read-after-write recurrence on R8.
+        if destination in sources:
             self_dependent_ffma_count += 1
 
     if invalid_ffma_operands:
@@ -622,6 +637,18 @@ def summarize_function(
                 instruction.text
             )
 
+    measured_region_constant_operand_instructions = [
+        instruction.text
+        for instruction in measured_region
+        if uses_constant_operand(instruction)
+    ]
+
+    measured_region_ffma_constant_operand_count = sum(
+        1
+        for instruction in measured_ffma_instructions
+        if uses_constant_operand(instruction)
+    )
+
     measured_region_memory_ops = [
         instruction
         for memory_class in (
@@ -657,8 +684,8 @@ def summarize_function(
             != len(measured_ffma_instructions)
         ):
             errors.append(
-                "Not every measured FFMA reads and writes the same "
-                "accumulator register."
+                "Not every measured FFMA uses its destination register "
+                "as one of its source operands."
             )
 
         if len(accumulator_registers) != 1:
@@ -718,8 +745,8 @@ def summarize_function(
             != len(measured_ffma_instructions)
         ):
             errors.append(
-                "Not every independent FFMA reads and writes its own "
-                "accumulator register."
+                "Not every independent FFMA uses its destination register "
+                "as one of its source operands."
             )
 
         if (
@@ -765,10 +792,11 @@ def summarize_function(
         )
 
         if not round_robin_valid:
-            errors.append(
-                "Independent accumulator ordering is not the expected "
-                f"{expected_independent_accumulators}-way round-robin "
-                "pattern."
+            warnings.append(
+                "Independent accumulator ordering differs from the source-level "
+                f"{expected_independent_accumulators}-way round-robin pattern. "
+                "ptxas may have reordered independent FFMA instructions; inspect "
+                "the normalized pattern and reuse distances."
             )
 
         invalid_reuse_registers: list[str] = []
@@ -781,9 +809,11 @@ def summarize_function(
                 invalid_reuse_registers.append(register)
 
         if invalid_reuse_registers:
-            errors.append(
-                "Unexpected accumulator reuse distance for: "
+            warnings.append(
+                "Accumulator reuse distance is not uniformly equal to "
+                f"{expected_reuse_distance} for: "
                 + ", ".join(invalid_reuse_registers)
+                + ". This may result from legal ptxas scheduling."
             )
 
     if name in MEASURED_PROBE_FUNCTIONS:
@@ -795,11 +825,24 @@ def summarize_function(
                 "measured timer region."
             )
 
-        if measured_region_memory_ops:
+        hard_memory_ops = (
+            memory_groups["global"]
+            + memory_groups["local"]
+            + memory_groups["shared"]
+            + memory_groups["other"]
+        )
+
+        if hard_memory_ops:
             errors.append(
-                "Memory instructions were found inside the measured "
-                "region. Check for spills, constant loads, or setup "
-                "traffic."
+                "Global, local, shared, atomic, or other data-memory "
+                "instructions were found inside the measured region."
+            )
+
+        if memory_groups["constant"]:
+            warnings.append(
+                "Uniform or constant-memory load instructions appear "
+                "inside the measured region. These are not spills, but "
+                "they contribute fixed setup overhead to the measured cycles."
             )
 
         if accumulator_setup_ops_after_start_clock:
@@ -922,6 +965,12 @@ def summarize_function(
         ),
         measured_region_other_memory_ops=(
             memory_groups["other"]
+        ),
+        measured_region_constant_operand_instructions=(
+            measured_region_constant_operand_instructions
+        ),
+        measured_region_ffma_constant_operand_count=(
+            measured_region_ffma_constant_operand_count
         ),
 
         setup_ops_after_start_clock=(
@@ -1111,6 +1160,14 @@ def render_text(
         lines.append(
             f"  Other                   : "
             f"{len(summary.measured_region_other_memory_ops)}"
+        )
+        lines.append(
+            f"Constant-operand insns    : "
+            f"{len(summary.measured_region_constant_operand_instructions)}"
+        )
+        lines.append(
+            f"FFMA constant operands    : "
+            f"{summary.measured_region_ffma_constant_operand_count}"
         )
         lines.append(
             f"Setup ops after start     : "

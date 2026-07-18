@@ -1,0 +1,72 @@
+﻿{
+    "schema_version":  1,
+    "generated_at":  "2026-07-18T14:59:21.9512829+09:00",
+    "architecture":  "sm_86",
+    "required_kernels":  [
+                             "probe_timer_only",
+                             "probe_dependent_ffma",
+                             "probe_independent_ffma_8"
+                         ],
+    "selected":  {
+                     "name":  "probe_kernels.sm_86.cubin",
+                     "source_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\probe_kernels.sm_86.cubin",
+                     "copied_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_runtime_sm86.cubin",
+                     "size_bytes":  16808,
+                     "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909",
+                     "preference_score":  1010,
+                     "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\probe_kernels.sm_86.sass.txt"
+                 },
+    "candidates":  [
+                       {
+                           "name":  "main-probe_kernels.sm_86.cubin",
+                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\main-probe_kernels.sm_86.cubin",
+                           "size_bytes":  872,
+                           "sha256":  "a17f1237474a5e7d40b576f4418372bd40594f7487cc971cf6a706d17998a824",
+                           "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\main-probe_kernels.sm_86.sass.txt",
+                           "found_kernel_names":  [
+
+                                                  ],
+                           "missing_kernel_names":  [
+                                                        "probe_timer_only",
+                                                        "probe_dependent_ffma",
+                                                        "probe_independent_ffma_8"
+                                                    ],
+                           "contains_all_required_kernels":  false,
+                           "preference_score":  100
+                       },
+                       {
+                           "name":  "main.sm_86.cubin",
+                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\main.sm_86.cubin",
+                           "size_bytes":  1424,
+                           "sha256":  "05250fbe0bd187e0dae50e6ec250de4b55500ca343d98214eaf4c4df5f34a165",
+                           "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\main.sm_86.sass.txt",
+                           "found_kernel_names":  [
+
+                                                  ],
+                           "missing_kernel_names":  [
+                                                        "probe_timer_only",
+                                                        "probe_dependent_ffma",
+                                                        "probe_independent_ffma_8"
+                                                    ],
+                           "contains_all_required_kernels":  false,
+                           "preference_score":  0
+                       },
+                       {
+                           "name":  "probe_kernels.sm_86.cubin",
+                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\probe_kernels.sm_86.cubin",
+                           "size_bytes":  16808,
+                           "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909",
+                           "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\probe_kernels.sm_86.sass.txt",
+                           "found_kernel_names":  [
+                                                      "probe_timer_only",
+                                                      "probe_dependent_ffma",
+                                                      "probe_independent_ffma_8"
+                                                  ],
+                           "missing_kernel_names":  [
+
+                                                    ],
+                           "contains_all_required_kernels":  true,
+                           "preference_score":  1010
+                       }
+                   ]
+}

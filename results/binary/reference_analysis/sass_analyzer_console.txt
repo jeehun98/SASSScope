@@ -1,0 +1,6 @@
+Wrote: C:\Users\owner\Desktop\SASSScope\results\binary\reference_analysis\sass_summary.txt
+Wrote: C:\Users\owner\Desktop\SASSScope\results\binary\reference_analysis\sass_summary.json
+Wrote: C:\Users\owner\Desktop\SASSScope\results\binary\reference_analysis\probe_ffma_filtered.sass.txt
+Status: WARN
+Errors: 0
+Warnings: 4

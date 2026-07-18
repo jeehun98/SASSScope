@@ -249,6 +249,7 @@ try {
 
     $cubinArguments =
         $deviceCommonArguments +
+        $hostCompilerArguments +
         @(
             "--cubin"
             $kernelSource
@@ -282,6 +283,9 @@ try {
         "-O3"
         "-lineinfo"
         "--fmad=true"
+
+        "-Xcompiler=/utf-8"
+        "-Xcompiler=/EHsc"
 
         "-arch=compute_$Arch"
         "-I$includeDir"

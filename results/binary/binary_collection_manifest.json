@@ -1,0 +1,79 @@
+﻿{
+    "schema_version":  1,
+    "generated_at":  "2026-07-18T14:59:24.2184315+09:00",
+    "architecture":  "sm_86",
+    "canonical_runtime":  {
+                              "executable":  {
+                                                 "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\build\\probe_ffma.exe",
+                                                 "size_bytes":  498176,
+                                                 "sha256":  "51f3a0bb482ac8084c14bbd13e0d73cf0b4bd08e4aeb87b7f65a0e4450e20f92"
+                                             },
+                              "extracted_cubin":  {
+                                                      "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_runtime_sm86.cubin",
+                                                      "size_bytes":  16808,
+                                                      "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909"
+                                                  },
+                              "sass_source":  "cuobjdump output from probe_ffma.exe",
+                              "detailed_disassembly_source":  "CUBIN extracted from probe_ffma.exe"
+                          },
+    "reference_artifact":  {
+                               "cubin":  {
+                                             "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\build\\probe_kernels_sm86.cubin",
+                                             "size_bytes":  16808,
+                                             "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909"
+                                         },
+                               "runtime_identity":  false
+                           },
+    "outputs":  [
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma.ptx.txt",
+                        "size_bytes":  21242,
+                        "sha256":  "42485e789718678bfc59adf44e602d628af5ee398d45854d2a8ee9f1713e5f82"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_full.sass.txt",
+                        "size_bytes":  40195,
+                        "sha256":  "b6f0a381ceceb9ae2540c756d469c931f45b866b27c969abcb5871f6331e70d6"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_resource_usage.txt",
+                        "size_bytes":  1042,
+                        "sha256":  "9fa832054ecc6257a6deeeba77fdff388176d03e24f998c0e54a95cdb15cbaf1"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_runtime_sm86.cubin",
+                        "size_bytes":  16808,
+                        "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_lineinfo.sass.txt",
+                        "size_bytes":  17162,
+                        "sha256":  "9bc4e092912fc7cb08efdc2fd57856d9e685a12e76d146d7cb250a2ac589fdfa"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_detailed.sass.txt",
+                        "size_bytes":  71718,
+                        "sha256":  "5c78b9e4c653ff73e2feccbe9aee14b56c9e07ab0d08a5cde343f0f136b75030"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_reference_full.sass.txt",
+                        "size_bytes":  39580,
+                        "sha256":  "60122a73ce9903f841a26715ff1e672aae5e0d14b00dfa940e058ee16c773403"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_filtered.sass.txt",
+                        "size_bytes":  9480,
+                        "sha256":  "a6974d895befda520dda6ab4570d14db58e063a67c2d22c7fc4fc6c36d1587aa"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\sass_summary.txt",
+                        "size_bytes":  10169,
+                        "sha256":  "3299f8b2bcd5ff82986d07b1e29571792a4d9734109e7776e6309f643787f25b"
+                    },
+                    {
+                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\sass_summary.json",
+                        "size_bytes":  21468,
+                        "sha256":  "d49077da57bbbf5ad5a5449a95aff127ed8e6cf08770553fe063dad07131362c"
+                    }
+                ]
+}

@@ -1,32 +1,4 @@
 
-Fatbin elf code:
-================
-arch = sm_86
-code version = [1,7]
-host = windows
-compile_size = 64bit
-identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu 
-
-	code for sm_86
-
-Fatbin elf code:
-================
-arch = sm_86
-code version = [1,7]
-host = windows
-compile_size = 64bit
-identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu
-
-	code for sm_86
-
-Fatbin elf code:
-================
-arch = sm_86
-code version = [1,7]
-host = windows
-compile_size = 64bit
-identifier = C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu
-
 	code for sm_86
 		Function : probe_independent_ffma_8
 	.headerflags	@"EF_CUDA_TEXMODE_UNIFIED EF_CUDA_64BIT_ADDRESS EF_CUDA_SM86 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM86)"

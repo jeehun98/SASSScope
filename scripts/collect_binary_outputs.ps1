@@ -373,20 +373,7 @@ try {
             }
         )
 
-    $selectedRuntimeElf = $null
-
-    if ($architectureMatches.Count -eq 1) {
-        $selectedRuntimeElf =
-            $architectureMatches[0]
-    }
-    elseif (
-        $architectureMatches.Count -eq 0 -and
-        $extractedCandidates.Count -eq 1
-    ) {
-        $selectedRuntimeElf =
-            $extractedCandidates[0]
-    }
-    elseif ($architectureMatches.Count -eq 0) {
+    if ($architectureMatches.Count -eq 0) {
         $candidateNames =
             $extractedCandidates.Name -join ", "
 
@@ -395,13 +382,200 @@ try {
             "Candidates: $candidateNames"
         )
     }
-    else {
-        $candidateNames =
-            $architectureMatches.Name -join ", "
+
+    # ---------------------------------------------------------------------
+    # Inspect every matching ELF and find the one containing all probe kernels.
+    # ---------------------------------------------------------------------
+
+    $requiredKernelNames = @(
+        "probe_timer_only"
+        "probe_dependent_ffma"
+        "probe_independent_ffma_8"
+    )
+
+    $candidateInspectionDir =
+        Join-Path $binaryDir "runtime_candidate_inspection"
+
+    if (Test-Path -LiteralPath $candidateInspectionDir) {
+        Remove-Item `
+            -LiteralPath $candidateInspectionDir `
+            -Force `
+            -Recurse
+    }
+
+    Ensure-Directory $candidateInspectionDir
+
+    $candidateRecords = @()
+
+    foreach ($candidate in $architectureMatches) {
+        $safeBaseName =
+            [System.IO.Path]::GetFileNameWithoutExtension(
+                $candidate.Name
+            )
+
+        $candidateSassPath =
+            Join-Path `
+                $candidateInspectionDir `
+                "$safeBaseName.sass.txt"
+
+        Invoke-NativeCapture `
+            -Command "cuobjdump" `
+            -Arguments @(
+                "--dump-sass"
+                $candidate.FullName
+            ) `
+            -OutputPath $candidateSassPath |
+            Out-Null
+
+        $candidateSassText = ""
+
+        if (
+            Test-Path `
+                -LiteralPath $candidateSassPath `
+                -PathType Leaf
+        ) {
+            $candidateSassText =
+                Get-Content `
+                    -LiteralPath $candidateSassPath `
+                    -Raw
+        }
+
+        $foundKernelNames = @(
+            foreach ($kernelName in $requiredKernelNames) {
+                $escapedKernelName =
+                    [regex]::Escape($kernelName)
+
+                $functionPattern =
+                    "(?m)^\s*Function\s*:\s*$escapedKernelName\s*$"
+
+                if (
+                    $candidateSassText -match $functionPattern
+                ) {
+                    $kernelName
+                }
+            }
+        )
+
+        $missingKernelNames = @(
+            $requiredKernelNames |
+            Where-Object {
+                $_ -notin $foundKernelNames
+            }
+        )
+
+        $containsAllRequiredKernels =
+            $missingKernelNames.Count -eq 0
+
+        # Preference is only a tie-breaker after kernel-content validation.
+        #
+        # A combined name such as main-probe_kernels.sm_86.cubin is preferred
+        # because it commonly represents the executable-level linked image.
+        $preferenceScore = 0
+
+        if ($containsAllRequiredKernels) {
+            $preferenceScore += 1000
+        }
+
+        if (
+            $candidate.Name -eq
+            "main-probe_kernels.sm_$Arch.cubin"
+        ) {
+            $preferenceScore += 100
+        }
+        elseif (
+            $candidate.Name -match
+            "(^|[-_])probe_kernels([._-]|$)"
+        ) {
+            $preferenceScore += 10
+        }
+
+        $candidateHash =
+            Get-FileHash `
+                -LiteralPath $candidate.FullName `
+                -Algorithm SHA256
+
+        $candidateRecords += [pscustomobject]@{
+            name                         = $candidate.Name
+            path                         = $candidate.FullName
+            size_bytes                   = $candidate.Length
+            sha256                       =
+                $candidateHash.Hash.ToLowerInvariant()
+            sass_path                    = $candidateSassPath
+            found_kernel_names           = $foundKernelNames
+            missing_kernel_names         = $missingKernelNames
+            contains_all_required_kernels =
+                $containsAllRequiredKernels
+            preference_score             = $preferenceScore
+        }
+    }
+
+    $validCandidates =
+        @(
+            $candidateRecords |
+            Where-Object {
+                $_.contains_all_required_kernels
+            } |
+            Sort-Object `
+                -Property @(
+                    @{
+                        Expression = "preference_score"
+                        Descending = $true
+                    }
+                    @{
+                        Expression = "size_bytes"
+                        Descending = $true
+                    }
+                    @{
+                        Expression = "name"
+                        Descending = $false
+                    }
+                )
+        )
+
+    if ($validCandidates.Count -eq 0) {
+        $inspectionLines = @(
+            foreach ($record in $candidateRecords) {
+                $found =
+                    if ($record.found_kernel_names.Count -gt 0) {
+                        $record.found_kernel_names -join ", "
+                    }
+                    else {
+                        "none"
+                    }
+
+                $missing =
+                    if ($record.missing_kernel_names.Count -gt 0) {
+                        $record.missing_kernel_names -join ", "
+                    }
+                    else {
+                        "none"
+                    }
+
+                "  $($record.name): found=[$found], missing=[$missing]"
+            }
+        )
 
         throw (
-            "Multiple extracted runtime ELFs matched sm_$Arch.`n" +
-            "Candidates: $candidateNames"
+            "No extracted sm_$Arch ELF contains all required probe kernels.`n" +
+            ($inspectionLines -join "`n")
+        )
+    }
+
+    $selectedRecord =
+        $validCandidates[0]
+
+    $selectedRuntimeElf =
+        Get-Item `
+            -LiteralPath $selectedRecord.path
+
+    if ($validCandidates.Count -gt 1) {
+        $validNames =
+            $validCandidates.name -join ", "
+
+        Write-Warning (
+            "Multiple extracted ELFs contain all required probe kernels. " +
+            "Selected '$($selectedRecord.name)' using the preference rule. " +
+            "Valid candidates: $validNames"
         )
     }
 
@@ -409,6 +583,71 @@ try {
         -LiteralPath $selectedRuntimeElf.FullName `
         -Destination $runtimeCubinPath `
         -Force
+
+    Assert-NonEmptyFile `
+        -Path $runtimeCubinPath `
+        -Description "Selected runtime CUBIN"
+
+    # Preserve the candidate inspection and final selection.
+    $candidateSelectionPath =
+        Join-Path `
+            $binaryDir `
+            "runtime_cubin_selection.json"
+
+    $candidateSelection = [ordered]@{
+        schema_version = 1
+        generated_at   = (Get-Date).ToString("o")
+        architecture   = "sm_$Arch"
+
+        required_kernels = $requiredKernelNames
+
+        selected = [ordered]@{
+            name             = $selectedRecord.name
+            source_path      = $selectedRecord.path
+            copied_path      = $runtimeCubinPath
+            size_bytes       = $selectedRecord.size_bytes
+            sha256           = $selectedRecord.sha256
+            preference_score = $selectedRecord.preference_score
+            sass_path        = $selectedRecord.sass_path
+        }
+
+        candidates = @(
+            foreach ($record in $candidateRecords) {
+                [ordered]@{
+                    name             = $record.name
+                    path             = $record.path
+                    size_bytes       = $record.size_bytes
+                    sha256           = $record.sha256
+                    sass_path        = $record.sass_path
+
+                    found_kernel_names =
+                        @($record.found_kernel_names)
+
+                    missing_kernel_names =
+                        @($record.missing_kernel_names)
+
+                    contains_all_required_kernels =
+                        $record.contains_all_required_kernels
+
+                    preference_score =
+                        $record.preference_score
+                }
+            }
+        )
+    }
+
+    $candidateSelection |
+        ConvertTo-Json -Depth 8 |
+        Set-Content `
+            -LiteralPath $candidateSelectionPath `
+            -Encoding UTF8
+
+    Write-Host ""
+    Write-Host "Runtime CUBIN selection:"
+    Write-Host "  Selected candidate : $($selectedRecord.name)"
+    Write-Host "  Required kernels   : $($requiredKernelNames -join ', ')"
+    Write-Host "  Selection record   : $candidateSelectionPath"
+
 
     Assert-NonEmptyFile `
         -Path $runtimeCubinPath `
@@ -474,12 +713,6 @@ try {
     # ---------------------------------------------------------------------
     # Verify that required kernels exist in the canonical runtime SASS.
     # ---------------------------------------------------------------------
-
-    $requiredKernelNames = @(
-        "probe_timer_only",
-        "probe_dependent_ffma",
-        "probe_independent_ffma_8"
-    )
 
     foreach ($kernelName in $requiredKernelNames) {
         $kernelFound =
