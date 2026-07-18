@@ -1,32 +1,84 @@
+[overall]
+status        : WARN
+error count   : 0
+warning count : 1
+
+[configuration]
+input file       : C:\Users\owner\Desktop\SASSScope\results\runtime\runtime_raw.csv
+expected samples : not specified
+minimum ratio    : 1.200000
+maximum CV       : 0.050000
+
 [timer_only]
-samples : 100
-min     : 3.000000000
-median  : 3.000000000
-mean    : 3.000000000
-max     : 3.000000000
-pstdev  : 0.000000000
+unit       : total cycles
+samples    : 10
+min        : 3.000000000
+p05        : 3.000000000
+p25        : 3.000000000
+median     : 3.000000000
+p75        : 3.000000000
+p95        : 3.000000000
+max        : 3.000000000
+mean       : 3.000000000
+pstdev     : 0.000000000
+cv         : 0.000000000
+MAD        : 0.000000000
+outliers   : 0
 
 [dependent]
-samples : 100
-min     : 4.375556946
-median  : 4.375556946
-mean    : 4.375556946
-max     : 4.375556946
-pstdev  : 0.000000000
+unit       : cycles/FFMA
+samples    : 10
+min        : 4.375556946
+p05        : 4.375556946
+p25        : 4.375556946
+median     : 4.375556946
+p75        : 4.375556946
+p95        : 4.375556946
+max        : 4.375556946
+mean       : 4.375556946
+pstdev     : 0.000000000
+cv         : 0.000000000
+MAD        : 0.000000000
+outliers   : 0
 
 [independent_8]
-samples : 100
-min     : 1.531822205
-median  : 1.531829834
-mean    : 1.531829758
-max     : 1.531829834
-pstdev  : 0.000000759
+unit       : cycles/FFMA
+samples    : 10
+min        : 1.531829834
+p05        : 1.531829834
+p25        : 1.531829834
+median     : 1.531829834
+p75        : 1.531829834
+p95        : 1.531829834
+max        : 1.531829834
+mean       : 1.531829834
+pstdev     : 0.000000000
+cv         : 0.000000000
+MAD        : 0.000000000
+outliers   : 0
+
+[sample counts]
+timer_only    : 10
+dependent     : 10
+independent_8 : 10
+
+[dynamic FFMA count]
+dependent    : 131072
+independent_8: 131072
 
 [comparison]
-dependent median      : 4.375556946 cycles/instruction
-independent median    : 1.531829834 cycles/instruction
-median ratio          : 2.856424943
+dependent median      : 4.375556946 cycles/FFMA
+independent median    : 1.531829834 cycles/FFMA
+median ratio dep/ind  : 2.856424943
 relation dep > indep  : True
+paired ratio median   : 2.856424943
+paired ratio p05      : 2.856424943
+paired ratio p95      : 2.856424943
+dependent first runs   : 10
+independent first runs : 0
+
+[errors]
+none
 
 [warnings]
-none
+- Dependent/independent execution order is unbalanced: dependent-first=10, independent-first=0.

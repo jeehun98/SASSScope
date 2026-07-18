@@ -3,12 +3,19 @@
   "compute_capability": "sm_86",
   "sm_count": 58,
   "warp_size": 32,
+  "grid_dim_x": 1,
+  "block_dim_x": 1,
+  "active_threads": 1,
   "reported_clock_khz": 1125000,
   "cuda_driver_version": 13000,
   "cuda_runtime_version": 12060,
   "outer_iterations": 4096,
-  "instructions_per_iteration": 32,
+  "ffma_per_outer_iteration": 32,
+  "independent_accumulator_count": 8,
+  "independent_groups_per_outer_iteration": 4,
   "total_instructions": 131072,
-  "samples": 100,
-  "warmups": 10
+  "dynamic_ffma_count": 131072,
+  "timer_baseline": "three_value_keep_live_diagnostic_only",
+  "samples": 10,
+  "warmups": 3
 }
