@@ -24,8 +24,8 @@ def main() -> int:
         for row in csv.DictReader(stream):
             kernel = row["kernel"]
             checksums[kernel].append(float(row["checksum"]))
-            if row["cycles_per_instruction"]:
-                groups[kernel].append(float(row["cycles_per_instruction"]))
+            if row["cycles_per_ffma"]:
+                groups[kernel].append(float(row["cycles_per_ffma"]))
             else:
                 groups[kernel].append(float(row["total_cycles"]))
 
