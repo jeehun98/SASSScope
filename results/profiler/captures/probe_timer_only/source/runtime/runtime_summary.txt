@@ -1,0 +1,48 @@
+GPU                  : NVIDIA GeForce RTX 3080 Ti Laptop GPU
+Compute capability   : sm_86
+SM count             : 58
+Warp size            : 32
+Launch configuration : <<<1, 1>>>
+Active threads       : 1
+Active lanes         : 1
+Reported clock rate  : 1125000 kHz
+CUDA driver version  : 13000
+CUDA runtime version : 12060
+Samples              : 1
+Warmups              : 0
+Dynamic FFMA/probe   : 131072
+Execution policy     : timer first, FFMA order alternates by run parity
+CSV row order        : actual kernel launch order
+Dependent first      : 1 runs
+Independent first    : 0 runs
+
+Timer-only is a diagnostic measurement and is not
+subtracted from dependent or independent cycle results.
+
+[Timer-only]
+Minimum            : 3.000000 cycles
+Median             : 3.000000 cycles
+Mean               : 3.000000 cycles
+Maximum            : 3.000000 cycles
+Standard deviation : 0.000000 cycles
+
+[Dependent FFMA]
+Minimum            : 4.375557 cycles/FFMA
+Median             : 4.375557 cycles/FFMA
+Mean               : 4.375557 cycles/FFMA
+Maximum            : 4.375557 cycles/FFMA
+Standard deviation : 0.000000 cycles/FFMA
+
+[Independent FFMA (8 accumulators)]
+Minimum            : 1.531822 cycles/FFMA
+Median             : 1.531822 cycles/FFMA
+Mean               : 1.531822 cycles/FFMA
+Maximum            : 1.531822 cycles/FFMA
+Standard deviation : 0.000000 cycles/FFMA
+
+[Comparison]
+Dependent/independent median ratio : 2.856439
+Dependent median > independent     : true
+Dependent checksum                 : 1.031350
+Independent checksum               : 8.035650
+Checksums finite                   : true
