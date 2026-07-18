@@ -5,6 +5,17 @@ param(
     [ValidateRange(0, 1000000)]
     [int]$Warmups = 10,
 
+    [ValidateRange(0.000001, 1000000.0)]
+    [double]$MinimumRatio = 1.20,
+
+    [ValidateRange(0.0, 10.0)]
+    [double]$MaxCv = 0.05,
+
+    [switch]$FailOnWarning,
+
+    # Preserve previous runtime outputs by moving them into a timestamped
+    # archive directory. The active output directory is still cleaned so
+    # stale files can never be mistaken for newly generated results.
     [switch]$KeepExisting
 )
 
@@ -16,10 +27,15 @@ $ErrorActionPreference = "Stop"
 $root = Get-ProjectRoot
 Set-Location $root
 
-$exePath = Join-Path $root "build/probe_ffma.exe"
-$analyzerPath = Join-Path $root "tools/analyze_runtime.py"
+$exePath =
+    Join-Path $root "build/probe_ffma.exe"
 
-$runtimeDir = Join-Path $root "results/runtime"
+$analyzerPath =
+    Join-Path $root "tools/analyze_runtime.py"
+
+$runtimeDir =
+    Join-Path $root "results/runtime"
+
 Ensure-Directory $runtimeDir
 
 $runtimeConsolePath =
@@ -39,6 +55,9 @@ $runtimeCheckPath =
 
 $metadataPath =
     Join-Path $runtimeDir "metadata.json"
+
+$runtimeRunManifestPath =
+    Join-Path $runtimeDir "runtime_run_manifest.json"
 
 
 function Assert-OutputFile {
@@ -74,8 +93,60 @@ function Assert-OutputFile {
 }
 
 
+function Get-RequiredJsonProperty {
+    param(
+        [Parameter(Mandatory)]
+        [object]$Object,
+
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [string]$DocumentName
+    )
+
+    $property =
+        $Object.PSObject.Properties[$Name]
+
+    if ($null -eq $property) {
+        throw (
+            "$DocumentName is missing required property '$Name'."
+        )
+    }
+
+    return $property.Value
+}
+
+
+function Get-ArtifactRecord {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Path
+    )
+
+    Assert-OutputFile `
+        -Path $Path `
+        -Description "Artifact"
+
+    $file =
+        Get-Item `
+            -LiteralPath $Path
+
+    $hash =
+        Get-FileHash `
+            -LiteralPath $Path `
+            -Algorithm SHA256
+
+    return [ordered]@{
+        path       = $file.FullName
+        size_bytes = $file.Length
+        sha256     = $hash.Hash.ToLowerInvariant()
+    }
+}
+
+
 # -------------------------------------------------------------------------
-# Validate inputs
+# Validate inputs and tools
 # -------------------------------------------------------------------------
 
 if (
@@ -103,11 +174,28 @@ if (
     )
 }
 
+$pythonCommandInfo =
+    Get-Command `
+        "python" `
+        -ErrorAction Stop
+
+$pythonCommand =
+    if ($pythonCommandInfo.Path) {
+        $pythonCommandInfo.Path
+    } else {
+        $pythonCommandInfo.Source
+    }
+
+if ([string]::IsNullOrWhiteSpace($pythonCommand)) {
+    throw "Unable to resolve the Python executable."
+}
+
 
 # -------------------------------------------------------------------------
-# Remove stale outputs
+# Remove or archive stale outputs
 #
-# A stale runtime_raw.csv must never be reused after a failed executable run.
+# Even when -KeepExisting is specified, the active output files are moved
+# away before execution. This prevents stale output from passing validation.
 # -------------------------------------------------------------------------
 
 $generatedPaths = @(
@@ -117,11 +205,45 @@ $generatedPaths = @(
     $runtimeSummaryPath
     $runtimeCheckPath
     $metadataPath
+    $runtimeRunManifestPath
 )
 
-if (-not $KeepExisting) {
-    foreach ($path in $generatedPaths) {
-        if (Test-Path -LiteralPath $path) {
+$existingGeneratedPaths =
+    @(
+        $generatedPaths |
+        Where-Object {
+            Test-Path `
+                -LiteralPath $_ `
+                -PathType Leaf
+        }
+    )
+
+if ($existingGeneratedPaths.Count -gt 0) {
+    if ($KeepExisting) {
+        $archiveTimestamp =
+            Get-Date -Format "yyyyMMdd_HHmmss"
+
+        $archiveDir =
+            Join-Path `
+                $runtimeDir `
+                "archive/$archiveTimestamp"
+
+        Ensure-Directory $archiveDir
+
+        foreach ($path in $existingGeneratedPaths) {
+            Move-Item `
+                -LiteralPath $path `
+                -Destination $archiveDir `
+                -Force
+        }
+
+        Write-Host ""
+        Write-Host (
+            "Previous runtime outputs archived to: " +
+            $archiveDir
+        ) -ForegroundColor DarkYellow
+    } else {
+        foreach ($path in $existingGeneratedPaths) {
             Remove-Item `
                 -LiteralPath $path `
                 -Force
@@ -143,15 +265,20 @@ $exeHash =
         -LiteralPath $exePath `
         -Algorithm SHA256
 
+$exeHashText =
+    $exeHash.Hash.ToLowerInvariant()
 
 Write-Host ""
 Write-Host "Running FFMA probe..." -ForegroundColor Cyan
-Write-Host "  Executable : $exePath"
-Write-Host "  EXE size   : $($exeFile.Length) bytes"
-Write-Host "  EXE SHA-256: $($exeHash.Hash.ToLowerInvariant())"
-Write-Host "  Samples    : $Samples"
-Write-Host "  Warmups    : $Warmups"
-Write-Host "  Output dir : $runtimeDir"
+Write-Host "  Executable     : $exePath"
+Write-Host "  EXE size       : $($exeFile.Length) bytes"
+Write-Host "  EXE SHA-256    : $exeHashText"
+Write-Host "  Samples        : $Samples"
+Write-Host "  Warmups        : $Warmups"
+Write-Host "  Minimum ratio  : $MinimumRatio"
+Write-Host "  Maximum CV     : $MaxCv"
+Write-Host "  Fail on warning: $FailOnWarning"
+Write-Host "  Output dir     : $runtimeDir"
 
 
 # -------------------------------------------------------------------------
@@ -174,8 +301,12 @@ Invoke-NativeCapture `
 
 
 # -------------------------------------------------------------------------
-# Validate runtime outputs before running the Python analyzer
+# Validate executable outputs
 # -------------------------------------------------------------------------
+
+Assert-OutputFile `
+    -Path $runtimeConsolePath `
+    -Description "Runtime console output"
 
 Assert-OutputFile `
     -Path $runtimeRawPath `
@@ -190,7 +321,10 @@ Assert-OutputFile `
     -Description "Runtime metadata"
 
 
-# Check the CSV header early so renamed or stale schemas fail clearly.
+# -------------------------------------------------------------------------
+# Validate CSV schema
+# -------------------------------------------------------------------------
+
 $runtimeCsvHeader =
     Get-Content `
         -LiteralPath $runtimeRawPath `
@@ -232,23 +366,237 @@ if ($missingCsvColumns.Count -gt 0) {
 
 
 # -------------------------------------------------------------------------
+# Validate basic CSV row count
+#
+# Each measured run must contain:
+#
+#   timer_only
+#   dependent
+#   independent_8
+# -------------------------------------------------------------------------
+
+$runtimeRows =
+    @(
+        Import-Csv `
+            -LiteralPath $runtimeRawPath
+    )
+
+$expectedRowCount =
+    $Samples * 3
+
+if ($runtimeRows.Count -ne $expectedRowCount) {
+    throw (
+        "runtime_raw.csv contains an unexpected number of rows.`n" +
+        "Expected: $expectedRowCount`n" +
+        "Actual  : $($runtimeRows.Count)"
+    )
+}
+
+
+# -------------------------------------------------------------------------
+# Validate metadata produced by main.cu
+# -------------------------------------------------------------------------
+
+try {
+    $runtimeMetadata =
+        Get-Content `
+            -LiteralPath $metadataPath `
+            -Raw |
+        ConvertFrom-Json
+} catch {
+    throw (
+        "Failed to parse runtime metadata JSON: " +
+        "$metadataPath`n$($_.Exception.Message)"
+    )
+}
+
+$metadataSamples =
+    [int](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "samples" `
+            -DocumentName "metadata.json"
+    )
+
+$metadataWarmups =
+    [int](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "warmups" `
+            -DocumentName "metadata.json"
+    )
+
+$metadataDynamicFfmaCount =
+    [long](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "dynamic_ffma_count" `
+            -DocumentName "metadata.json"
+    )
+
+$metadataExecutionOrderPolicy =
+    [string](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "execution_order_policy" `
+            -DocumentName "metadata.json"
+    )
+
+$metadataCsvRowOrder =
+    [string](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "csv_row_order" `
+            -DocumentName "metadata.json"
+    )
+
+$metadataDependentFirstRuns =
+    [int](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "dependent_first_runs" `
+            -DocumentName "metadata.json"
+    )
+
+$metadataIndependentFirstRuns =
+    [int](
+        Get-RequiredJsonProperty `
+            -Object $runtimeMetadata `
+            -Name "independent_first_runs" `
+            -DocumentName "metadata.json"
+    )
+
+if ($metadataSamples -ne $Samples) {
+    throw (
+        "metadata.json samples mismatch.`n" +
+        "Requested: $Samples`n" +
+        "Metadata : $metadataSamples"
+    )
+}
+
+if ($metadataWarmups -ne $Warmups) {
+    throw (
+        "metadata.json warmups mismatch.`n" +
+        "Requested: $Warmups`n" +
+        "Metadata : $metadataWarmups"
+    )
+}
+
+if ($metadataDynamicFfmaCount -le 0) {
+    throw (
+        "metadata.json dynamic_ffma_count must be positive. " +
+        "Found: $metadataDynamicFfmaCount"
+    )
+}
+
+$expectedExecutionOrderPolicy =
+    "timer_first_then_alternating_ffma_by_run_parity"
+
+if (
+    $metadataExecutionOrderPolicy `
+        -ne $expectedExecutionOrderPolicy
+) {
+    throw (
+        "Unexpected execution_order_policy in metadata.json.`n" +
+        "Expected: $expectedExecutionOrderPolicy`n" +
+        "Actual  : $metadataExecutionOrderPolicy"
+    )
+}
+
+$expectedCsvRowOrder =
+    "actual_kernel_launch_order"
+
+if ($metadataCsvRowOrder -ne $expectedCsvRowOrder) {
+    throw (
+        "Unexpected csv_row_order in metadata.json.`n" +
+        "Expected: $expectedCsvRowOrder`n" +
+        "Actual  : $metadataCsvRowOrder"
+    )
+}
+
+$expectedDependentFirstRuns =
+    [int][Math]::Ceiling(
+        [double]$Samples / 2.0
+    )
+
+$expectedIndependentFirstRuns =
+    [int][Math]::Floor(
+        [double]$Samples / 2.0
+    )
+
+if (
+    $metadataDependentFirstRuns `
+        -ne $expectedDependentFirstRuns
+) {
+    throw (
+        "metadata.json dependent_first_runs mismatch.`n" +
+        "Expected: $expectedDependentFirstRuns`n" +
+        "Actual  : $metadataDependentFirstRuns"
+    )
+}
+
+if (
+    $metadataIndependentFirstRuns `
+        -ne $expectedIndependentFirstRuns
+) {
+    throw (
+        "metadata.json independent_first_runs mismatch.`n" +
+        "Expected: $expectedIndependentFirstRuns`n" +
+        "Actual  : $metadataIndependentFirstRuns"
+    )
+}
+
+
+# -------------------------------------------------------------------------
 # Analyze runtime results
 # -------------------------------------------------------------------------
 
 Write-Host ""
 Write-Host "Analyzing runtime samples..." -ForegroundColor Cyan
 
+$invariantCulture =
+    [System.Globalization.CultureInfo]::InvariantCulture
+
+$minimumRatioText =
+    $MinimumRatio.ToString(
+        "G17",
+        $invariantCulture
+    )
+
+$maxCvText =
+    $MaxCv.ToString(
+        "G17",
+        $invariantCulture
+    )
+
+$analyzerArguments = @(
+    $analyzerPath
+    "--input"
+    $runtimeRawPath
+    "--output"
+    $runtimeCheckPath
+    "--expected-samples"
+    [string]$Samples
+    "--minimum-ratio"
+    $minimumRatioText
+    "--max-cv"
+    $maxCvText
+)
+
+if ($FailOnWarning) {
+    $analyzerArguments +=
+        "--fail-on-warning"
+}
+
 Invoke-NativeCapture `
-    -Command "python" `
-    -Arguments @(
-        $analyzerPath
-        "--input"
-        $runtimeRawPath
-        "--output"
-        $runtimeCheckPath
-    ) `
+    -Command $pythonCommand `
+    -Arguments $analyzerArguments `
     -OutputPath $runtimeAnalyzerConsolePath |
     Out-Null
+
+Assert-OutputFile `
+    -Path $runtimeAnalyzerConsolePath `
+    -Description "Runtime analyzer console output"
 
 Assert-OutputFile `
     -Path $runtimeCheckPath `
@@ -256,19 +604,135 @@ Assert-OutputFile `
 
 
 # -------------------------------------------------------------------------
+# Read analyzer status
+# -------------------------------------------------------------------------
+
+$statusMatch =
+    Select-String `
+        -LiteralPath $runtimeCheckPath `
+        -Pattern "^\s*status\s*:\s*(\S+)\s*$" |
+    Select-Object -First 1
+
+$validationStatus =
+    if (
+        $null -ne $statusMatch -and
+        $statusMatch.Matches.Count -gt 0
+    ) {
+        $statusMatch.Matches[0].Groups[1].Value.ToUpperInvariant()
+    } else {
+        "UNKNOWN"
+    }
+
+if (
+    $validationStatus -notin @(
+        "PASS"
+        "WARN"
+    )
+) {
+    throw (
+        "Unexpected runtime analyzer status: " +
+        "$validationStatus"
+    )
+}
+
+
+# -------------------------------------------------------------------------
+# Write runtime execution manifest
+# -------------------------------------------------------------------------
+
+$runtimeRunManifest = [ordered]@{
+    schema_version = 1
+    generated_at   = (Get-Date).ToString("o")
+
+    configuration = [ordered]@{
+        samples         = $Samples
+        warmups         = $Warmups
+        minimum_ratio   = $MinimumRatio
+        maximum_cv      = $MaxCv
+        fail_on_warning = [bool]$FailOnWarning
+    }
+
+    executable = [ordered]@{
+        path       = $exeFile.FullName
+        size_bytes = $exeFile.Length
+        sha256     = $exeHashText
+    }
+
+    runtime_metadata = [ordered]@{
+        dynamic_ffma_count      = $metadataDynamicFfmaCount
+        execution_order_policy  = $metadataExecutionOrderPolicy
+        csv_row_order           = $metadataCsvRowOrder
+        dependent_first_runs    = $metadataDependentFirstRuns
+        independent_first_runs  = $metadataIndependentFirstRuns
+    }
+
+    analyzer = [ordered]@{
+        python_path = $pythonCommand
+        script_path = $analyzerPath
+        status      = $validationStatus
+        arguments   = $analyzerArguments
+    }
+
+    outputs = [ordered]@{
+        runtime_console =
+            Get-ArtifactRecord $runtimeConsolePath
+
+        runtime_raw =
+            Get-ArtifactRecord $runtimeRawPath
+
+        runtime_summary =
+            Get-ArtifactRecord $runtimeSummaryPath
+
+        runtime_check =
+            Get-ArtifactRecord $runtimeCheckPath
+
+        runtime_analyzer_console =
+            Get-ArtifactRecord $runtimeAnalyzerConsolePath
+
+        metadata =
+            Get-ArtifactRecord $metadataPath
+    }
+}
+
+$runtimeRunManifest |
+    ConvertTo-Json -Depth 10 |
+    Set-Content `
+        -LiteralPath $runtimeRunManifestPath `
+        -Encoding UTF8
+
+Assert-OutputFile `
+    -Path $runtimeRunManifestPath `
+    -Description "Runtime run manifest"
+
+
+# -------------------------------------------------------------------------
 # Final report
 # -------------------------------------------------------------------------
 
+$finalColor =
+    if ($validationStatus -eq "PASS") {
+        "Green"
+    } else {
+        "Yellow"
+    }
+
 Write-Host ""
-Write-Host "Runtime outputs collected successfully." `
-    -ForegroundColor Green
+Write-Host (
+    "Runtime outputs collected successfully. " +
+    "Validation status: $validationStatus"
+) -ForegroundColor $finalColor
 
 Write-Host "  Samples             : $Samples"
 Write-Host "  Warmups             : $Warmups"
+Write-Host "  Dynamic FFMA/probe  : $metadataDynamicFfmaCount"
+Write-Host "  Dependent first     : $metadataDependentFirstRuns"
+Write-Host "  Independent first   : $metadataIndependentFirstRuns"
 Write-Host "  Runtime executable  : $exePath"
+Write-Host "  EXE SHA-256         : $exeHashText"
 Write-Host "  Raw CSV             : $runtimeRawPath"
 Write-Host "  Runtime summary     : $runtimeSummaryPath"
 Write-Host "  Runtime validation  : $runtimeCheckPath"
 Write-Host "  Runtime metadata    : $metadataPath"
+Write-Host "  Runtime manifest    : $runtimeRunManifestPath"
 Write-Host "  Runtime console     : $runtimeConsolePath"
 Write-Host "  Analyzer console    : $runtimeAnalyzerConsolePath"

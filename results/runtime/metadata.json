@@ -1,4 +1,5 @@
 {
+  "schema_version": 2,
   "gpu_name": "NVIDIA GeForce RTX 3080 Ti Laptop GPU",
   "compute_capability": "sm_86",
   "sm_count": 58,
@@ -6,6 +7,7 @@
   "grid_dim_x": 1,
   "block_dim_x": 1,
   "active_threads": 1,
+  "active_lanes": 1,
   "reported_clock_khz": 1125000,
   "cuda_driver_version": 13000,
   "cuda_runtime_version": 12060,
@@ -16,6 +18,10 @@
   "total_instructions": 131072,
   "dynamic_ffma_count": 131072,
   "timer_baseline": "three_value_keep_live_diagnostic_only",
-  "samples": 10,
-  "warmups": 3
+  "execution_order_policy": "timer_first_then_alternating_ffma_by_run_parity",
+  "csv_row_order": "actual_kernel_launch_order",
+  "dependent_first_runs": 50,
+  "independent_first_runs": 50,
+  "samples": 100,
+  "warmups": 10
 }

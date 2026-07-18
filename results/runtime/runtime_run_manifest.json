@@ -1,0 +1,73 @@
+﻿{
+    "schema_version":  1,
+    "generated_at":  "2026-07-18T15:33:04.5114351+09:00",
+    "configuration":  {
+                          "samples":  100,
+                          "warmups":  10,
+                          "minimum_ratio":  1.2,
+                          "maximum_cv":  0.05,
+                          "fail_on_warning":  false
+                      },
+    "executable":  {
+                       "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\build\\probe_ffma.exe",
+                       "size_bytes":  503808,
+                       "sha256":  "eaaa7fd3ce4c7b278e6161e4a045617867281db4e9da71466278284de0358747"
+                   },
+    "runtime_metadata":  {
+                             "dynamic_ffma_count":  131072,
+                             "execution_order_policy":  "timer_first_then_alternating_ffma_by_run_parity",
+                             "csv_row_order":  "actual_kernel_launch_order",
+                             "dependent_first_runs":  50,
+                             "independent_first_runs":  50
+                         },
+    "analyzer":  {
+                     "python_path":  "C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                     "script_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\tools\\analyze_runtime.py",
+                     "status":  "PASS",
+                     "arguments":  [
+                                       "C:\\Users\\owner\\Desktop\\SASSScope\\tools\\analyze_runtime.py",
+                                       "--input",
+                                       "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_raw.csv",
+                                       "--output",
+                                       "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_check.txt",
+                                       "--expected-samples",
+                                       "100",
+                                       "--minimum-ratio",
+                                       "1.2",
+                                       "--max-cv",
+                                       "0.050000000000000003"
+                                   ]
+                 },
+    "outputs":  {
+                    "runtime_console":  {
+                                            "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_console.txt",
+                                            "size_bytes":  1723,
+                                            "sha256":  "115a0252755b31be1b8bccedfbba81654008dce769371c74fa6d1c3752792c98"
+                                        },
+                    "runtime_raw":  {
+                                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_raw.csv",
+                                        "size_bytes":  14839,
+                                        "sha256":  "a7fd68d0ff3ea18cb7d994d7c259dd5b64f83cbdc3d98115bbfcddea914b348a"
+                                    },
+                    "runtime_summary":  {
+                                            "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_summary.txt",
+                                            "size_bytes":  1651,
+                                            "sha256":  "6aea0842e2a093fc92991ccab1bdeae3fd856f8877c79115858e4f46f77a7c1f"
+                                        },
+                    "runtime_check":  {
+                                          "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_check.txt",
+                                          "size_bytes":  1886,
+                                          "sha256":  "e688faa24bd5eb7b7683956678c5676b21dbb30c4f834aac5b9241fabd1cbe28"
+                                      },
+                    "runtime_analyzer_console":  {
+                                                     "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\runtime_analyzer_console.txt",
+                                                     "size_bytes":  1886,
+                                                     "sha256":  "e688faa24bd5eb7b7683956678c5676b21dbb30c4f834aac5b9241fabd1cbe28"
+                                                 },
+                    "metadata":  {
+                                     "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\runtime\\metadata.json",
+                                     "size_bytes":  856,
+                                     "sha256":  "ebcadc49e8273c0585fe3bc988d757d530013900da46e3ddbc9d433d6af9a77f"
+                                 }
+                }
+}

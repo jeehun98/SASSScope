@@ -4,12 +4,17 @@ SM count             : 58
 Warp size            : 32
 Launch configuration : <<<1, 1>>>
 Active threads       : 1
+Active lanes         : 1
 Reported clock rate  : 1125000 kHz
 CUDA driver version  : 13000
 CUDA runtime version : 12060
-Samples              : 10
-Warmups              : 3
+Samples              : 100
+Warmups              : 10
 Dynamic FFMA/probe   : 131072
+Execution policy     : timer first, FFMA order alternates by run parity
+CSV row order        : actual kernel launch order
+Dependent first      : 50 runs
+Independent first    : 50 runs
 
 Timer-only is a diagnostic measurement and is not
 subtracted from dependent or independent cycle results.
@@ -37,6 +42,7 @@ Standard deviation : 0.000000 cycles/FFMA
 
 [Comparison]
 Dependent/independent median ratio : 2.856425
+Dependent median > independent     : true
 Dependent checksum                 : 1.031350
 Independent checksum               : 8.035650
 Checksums finite                   : true

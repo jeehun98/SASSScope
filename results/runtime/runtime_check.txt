@@ -1,17 +1,17 @@
 [overall]
-status        : WARN
+status        : PASS
 error count   : 0
-warning count : 1
+warning count : 0
 
 [configuration]
 input file       : C:\Users\owner\Desktop\SASSScope\results\runtime\runtime_raw.csv
-expected samples : not specified
+expected samples : 100
 minimum ratio    : 1.200000
 maximum CV       : 0.050000
 
 [timer_only]
 unit       : total cycles
-samples    : 10
+samples    : 100
 min        : 3.000000000
 p05        : 3.000000000
 p25        : 3.000000000
@@ -27,7 +27,7 @@ outliers   : 0
 
 [dependent]
 unit       : cycles/FFMA
-samples    : 10
+samples    : 100
 min        : 4.375556946
 p05        : 4.375556946
 p25        : 4.375556946
@@ -43,7 +43,7 @@ outliers   : 0
 
 [independent_8]
 unit       : cycles/FFMA
-samples    : 10
+samples    : 100
 min        : 1.531829834
 p05        : 1.531829834
 p25        : 1.531829834
@@ -58,9 +58,9 @@ MAD        : 0.000000000
 outliers   : 0
 
 [sample counts]
-timer_only    : 10
-dependent     : 10
-independent_8 : 10
+timer_only    : 100
+dependent     : 100
+independent_8 : 100
 
 [dynamic FFMA count]
 dependent    : 131072
@@ -74,11 +74,11 @@ relation dep > indep  : True
 paired ratio median   : 2.856424943
 paired ratio p05      : 2.856424943
 paired ratio p95      : 2.856424943
-dependent first runs   : 10
-independent first runs : 0
+dependent first runs   : 50
+independent first runs : 50
 
 [errors]
 none
 
 [warnings]
-- Dependent/independent execution order is unbalanced: dependent-first=10, independent-first=0.
+none
