@@ -1,38 +1,31 @@
 param(
-    # First fixture for establishing the profiling process.
     [ValidateNotNullOrEmpty()]
     [string]$KernelName = "probe_timer_only",
 
     # Basic:
-    #   Default section set. Used to verify report generation and filtering.
+    #   Basic sections for capture and launch validation.
     #
     # Source:
-    #   Basic set plus SourceCounters.
+    #   Basic sections plus SourceCounters.
     #
     # Full:
-    #   Full predefined set. Use only after Basic and Source are working.
+    #   Full predefined set.
     [ValidateSet("Basic", "Source", "Full")]
     [string]$CollectionMode = "Basic",
 
-    # The target executable receives:
-    #
-    #   probe_ffma.exe <output-dir> <samples> <warmups>
-    #
-    # One sample and zero warmups make kernel selection easiest to verify.
     [ValidateRange(1, 1000000)]
     [int]$Samples = 1,
 
     [ValidateRange(0, 1000000)]
     [int]$Warmups = 0,
 
-    # Explicitly record the clock-control policy used during profiling.
     [ValidateSet("base", "boost", "none")]
     [string]$ClockControl = "base",
 
-    # Preserve the existing active capture by moving it into an archive.
+    # Archive the previous capture instead of deleting it.
     [switch]$KeepExisting,
 
-    # Querying all available metric base names can create a large file.
+    # Skip the potentially large global metric query.
     [switch]$SkipMetricQuery
 )
 
@@ -43,43 +36,112 @@ $ErrorActionPreference = "Stop"
 
 
 # =========================================================================
-# Paths
+# Project root and commands
 # =========================================================================
 
 $root = Get-ProjectRoot
 Set-Location $root
 
 Require-Command "ncu" | Out-Null
+Require-Command "nvdisasm" | Out-Null
+Require-Command "python" | Out-Null
+
+
+function Resolve-CommandPath {
+    param(
+        [Parameter(Mandatory)]
+        [object]$CommandInfo,
+
+        [Parameter(Mandatory)]
+        [string]$CommandName
+    )
+
+    $pathProperty =
+        $CommandInfo.PSObject.Properties["Path"]
+
+    if (
+        $null -ne $pathProperty -and
+        -not [string]::IsNullOrWhiteSpace(
+            [string]$pathProperty.Value
+        )
+    ) {
+        return [string]$pathProperty.Value
+    }
+
+    $sourceProperty =
+        $CommandInfo.PSObject.Properties["Source"]
+
+    if (
+        $null -ne $sourceProperty -and
+        -not [string]::IsNullOrWhiteSpace(
+            [string]$sourceProperty.Value
+        )
+    ) {
+        return [string]$sourceProperty.Value
+    }
+
+    throw "Unable to resolve command path: $CommandName"
+}
+
 
 $ncuCommandInfo =
     Get-Command `
         "ncu" `
         -ErrorAction Stop
 
-$ncuPath =
-    if (
-        $null -ne $ncuCommandInfo.Path -and
-        -not [string]::IsNullOrWhiteSpace(
-            $ncuCommandInfo.Path
-        )
-    ) {
-        $ncuCommandInfo.Path
-    } else {
-        $ncuCommandInfo.Source
-    }
+$nvdisasmCommandInfo =
+    Get-Command `
+        "nvdisasm" `
+        -ErrorAction Stop
 
-if ([string]::IsNullOrWhiteSpace($ncuPath)) {
-    throw "Unable to resolve the Nsight Compute CLI path."
-}
+$pythonCommandInfo =
+    Get-Command `
+        "python" `
+        -ErrorAction Stop
+
+$ncuPath =
+    Resolve-CommandPath `
+        -CommandInfo $ncuCommandInfo `
+        -CommandName "ncu"
+
+$nvdisasmPath =
+    Resolve-CommandPath `
+        -CommandInfo $nvdisasmCommandInfo `
+        -CommandName "nvdisasm"
+
+$pythonPath =
+    Resolve-CommandPath `
+        -CommandInfo $pythonCommandInfo `
+        -CommandName "python"
+
+
+# =========================================================================
+# Input paths
+# =========================================================================
 
 $exePath =
     Join-Path $root "build/probe_ffma.exe"
+
+$runtimeCubinPath =
+    Join-Path `
+        $root `
+        "results/binary/probe_ffma_runtime_sm86.cubin"
+
+$sassListingAnalyzerPath =
+    Join-Path `
+        $root `
+        "tools/extract_sass_listing.py"
 
 $srcDir =
     Join-Path $root "src"
 
 $includeDir =
     Join-Path $root "include"
+
+
+# =========================================================================
+# Output directories
+# =========================================================================
 
 $profilerDir =
     Join-Path $root "results/profiler"
@@ -112,6 +174,11 @@ $captureDir =
 
 $profileRuntimeDir =
     Join-Path $captureDir "runtime"
+
+
+# =========================================================================
+# Nsight Compute output paths
+# =========================================================================
 
 $reportBase =
     Join-Path $captureDir "profile"
@@ -148,6 +215,41 @@ $sessionTextPath =
 
 $activeMetricsPath =
     Join-Path $captureDir "active_metrics.txt"
+
+
+# =========================================================================
+# Canonical SASS output paths
+# =========================================================================
+
+$canonicalSassLineInfoPath =
+    Join-Path `
+        $captureDir `
+        "canonical_sass_lineinfo.txt"
+
+$sassInstructionCsvPath =
+    Join-Path `
+        $captureDir `
+        "sass_instructions.csv"
+
+$sassInstructionTextPath =
+    Join-Path `
+        $captureDir `
+        "sass_instructions.txt"
+
+$sassInstructionJsonPath =
+    Join-Path `
+        $captureDir `
+        "sass_instructions.json"
+
+$sassAnalyzerConsolePath =
+    Join-Path `
+        $captureDir `
+        "sass_instruction_analyzer_console.txt"
+
+
+# =========================================================================
+# Manifest and environment output paths
+# =========================================================================
 
 $captureManifestPath =
     Join-Path $captureDir "capture_manifest.json"
@@ -415,6 +517,33 @@ if (
 if (
     -not (
         Test-Path `
+            -LiteralPath $runtimeCubinPath `
+            -PathType Leaf
+    )
+) {
+    throw (
+        "Missing canonical runtime CUBIN. " +
+        "Run scripts/collect_binary_outputs.ps1 first: " +
+        $runtimeCubinPath
+    )
+}
+
+if (
+    -not (
+        Test-Path `
+            -LiteralPath $sassListingAnalyzerPath `
+            -PathType Leaf
+    )
+) {
+    throw (
+        "Missing SASS listing analyzer: " +
+        $sassListingAnalyzerPath
+    )
+}
+
+if (
+    -not (
+        Test-Path `
             -LiteralPath $srcDir `
             -PathType Container
     )
@@ -434,7 +563,7 @@ if (
 
 
 # =========================================================================
-# Archive or remove the previous active capture
+# Archive or remove previous capture
 # =========================================================================
 
 if (
@@ -476,7 +605,7 @@ Ensure-Directory $profileRuntimeDir
 
 
 # =========================================================================
-# Record executable identity
+# Record artifact identities
 # =========================================================================
 
 $exeFile =
@@ -491,9 +620,21 @@ $exeHash =
 $exeHashText =
     $exeHash.Hash.ToLowerInvariant()
 
+$runtimeCubinFile =
+    Get-Item `
+        -LiteralPath $runtimeCubinPath
+
+$runtimeCubinHash =
+    Get-FileHash `
+        -LiteralPath $runtimeCubinPath `
+        -Algorithm SHA256
+
+$runtimeCubinHashText =
+    $runtimeCubinHash.Hash.ToLowerInvariant()
+
 
 # =========================================================================
-# Record the Nsight Compute environment
+# Record Nsight Compute environment
 # =========================================================================
 
 Write-Host ""
@@ -572,12 +713,12 @@ if (-not $SkipMetricQuery) {
     )
 }
 
-$nvidiaSmi =
+$nvidiaSmiCommand =
     Get-Command `
         "nvidia-smi" `
         -ErrorAction SilentlyContinue
 
-if ($null -ne $nvidiaSmi) {
+if ($null -ne $nvidiaSmiCommand) {
     try {
         Invoke-NativeCapture `
             -Command "nvidia-smi" `
@@ -627,9 +768,8 @@ switch ($CollectionMode) {
                 '(?im)\bSourceCounters\b'
         ) {
             throw (
-                "CollectionMode Source requires the " +
-                "SourceCounters section, but it was not found " +
-                "in ncu --list-sections."
+                "CollectionMode Source requires SourceCounters, " +
+                "but the section was not found in ncu --list-sections."
             )
         }
 
@@ -637,6 +777,7 @@ switch ($CollectionMode) {
             @(
                 "--set"
                 "basic"
+
                 "--section"
                 "SourceCounters"
             )
@@ -662,7 +803,7 @@ switch ($CollectionMode) {
 }
 
 
-# Record the metrics activated by the selected set/sections.
+# Record metrics activated by the selected configuration.
 [void](
     Invoke-OptionalNcuToFile `
         -Arguments (
@@ -701,8 +842,7 @@ if ($supportsSourceFolders) {
 } else {
     $warnings.Add(
         "This Nsight Compute version does not advertise " +
-        "--source-folders. Source import will rely on paths " +
-        "embedded through -lineinfo."
+        "--source-folders. Source import will rely on -lineinfo paths."
     ) | Out-Null
 }
 
@@ -773,6 +913,8 @@ Write-Host "  Warmups         : $Warmups"
 Write-Host "  Clock control   : $ClockControl"
 Write-Host "  Executable      : $exePath"
 Write-Host "  EXE SHA-256     : $exeHashText"
+Write-Host "  Runtime CUBIN   : $runtimeCubinPath"
+Write-Host "  CUBIN SHA-256   : $runtimeCubinHashText"
 Write-Host "  Capture dir     : $captureDir"
 
 Invoke-NativeCapture `
@@ -791,42 +933,53 @@ Assert-ProfilerFile `
 
 
 # =========================================================================
-# Reuse the report to export multiple views
+# Export optional Details views
+#
+# Nsight Compute 2025.4 does not accept --apply-rules with --import.
+# Details may still invoke Python-based rule processing, so these exports
+# are optional. Raw and Source exports remain mandatory.
 # =========================================================================
 
 Write-Host ""
 Write-Host "Exporting report views..." `
     -ForegroundColor Cyan
 
-Invoke-NcuImportToFile `
-    -Arguments @(
-        "--page"
-        "details"
+$detailsTextSucceeded =
+    Invoke-OptionalNcuImportToFile `
+        -Arguments @(
+            "--page"
+            "details"
 
-        "--print-details"
-        "all"
+            "--print-details"
+            "all"
 
-        "--print-units"
-        "base"
-    ) `
-    -OutputPath $detailsTextPath `
-    -Description "Details text output"
+            "--print-units"
+            "base"
+        ) `
+        -OutputPath $detailsTextPath `
+        -Description "Details text output"
 
-Invoke-NcuImportToFile `
-    -Arguments @(
-        "--page"
-        "details"
+$detailsCsvSucceeded =
+    Invoke-OptionalNcuImportToFile `
+        -Arguments @(
+            "--page"
+            "details"
 
-        "--print-details"
-        "all"
+            "--print-details"
+            "all"
 
-        "--print-units"
-        "base"
+            "--print-units"
+            "base"
 
-        "--csv"
-    ) `
-    -OutputPath $detailsCsvPath `
-    -Description "Details CSV output"
+            "--csv"
+        ) `
+        -OutputPath $detailsCsvPath `
+        -Description "Details CSV output"
+
+
+# =========================================================================
+# Export mandatory Raw and SASS views
+# =========================================================================
 
 Invoke-NcuImportToFile `
     -Arguments @(
@@ -869,8 +1022,10 @@ Invoke-NcuImportToFile `
     -Description "SASS source CSV output"
 
 
-# CUDA-SASS correlation is useful but may not be available if the source
-# path cannot be resolved by the installed NCU version.
+# =========================================================================
+# Export optional CUDA-SASS correlation
+# =========================================================================
+
 $cudaSassTextSucceeded =
     Invoke-OptionalNcuImportToFile `
         -Arguments @(
@@ -901,6 +1056,10 @@ $cudaSassCsvSucceeded =
         -Description "CUDA-SASS correlation CSV output"
 
 
+# =========================================================================
+# Export optional session information
+# =========================================================================
+
 $sessionSucceeded =
     $false
 
@@ -922,14 +1081,105 @@ if ($supportsSessionPage) {
 
 
 # =========================================================================
-# Validate the exported report
+# Generate canonical runtime-CUBIN SASS with source line information
+# =========================================================================
+
+Write-Host ""
+Write-Host "Generating canonical SASS listing..." `
+    -ForegroundColor Cyan
+
+Invoke-NativeCapture `
+    -Command $nvdisasmPath `
+    -Arguments @(
+        "-gi"
+        $runtimeCubinPath
+    ) `
+    -OutputPath $canonicalSassLineInfoPath |
+    Out-Null
+
+Assert-ProfilerFile `
+    -Path $canonicalSassLineInfoPath `
+    -Description "Canonical SASS line-info output"
+
+
+# =========================================================================
+# Extract normalized SASS instruction table
+# =========================================================================
+
+Write-Host ""
+Write-Host "Extracting normalized SASS instructions..." `
+    -ForegroundColor Cyan
+
+# -S prevents user-site .pth processing.
+# -X utf8 enables stable UTF-8 handling on Windows.
+Invoke-NativeCapture `
+    -Command $pythonPath `
+    -Arguments @(
+        "-X"
+        "utf8"
+
+        "-S"
+
+        $sassListingAnalyzerPath
+
+        "--input"
+        $canonicalSassLineInfoPath
+
+        "--kernel"
+        $KernelName
+
+        "--output-csv"
+        $sassInstructionCsvPath
+
+        "--output-text"
+        $sassInstructionTextPath
+
+        "--output-json"
+        $sassInstructionJsonPath
+
+        "--source-root"
+        $root
+
+        "--source-root"
+        $srcDir
+
+        "--source-root"
+        $includeDir
+    ) `
+    -OutputPath $sassAnalyzerConsolePath |
+    Out-Null
+
+Assert-ProfilerFile `
+    -Path $sassInstructionCsvPath `
+    -Description "Normalized SASS instruction CSV"
+
+Assert-ProfilerFile `
+    -Path $sassInstructionTextPath `
+    -Description "SASS instruction text listing"
+
+Assert-ProfilerFile `
+    -Path $sassInstructionJsonPath `
+    -Description "SASS instruction JSON report"
+
+Assert-ProfilerFile `
+    -Path $sassAnalyzerConsolePath `
+    -Description "SASS instruction analyzer console"
+
+
+# =========================================================================
+# Validate required NCU outputs
 # =========================================================================
 
 $kernelFoundInDetails =
-    Test-TextFileContains `
-        -Path $detailsTextPath `
-        -Pattern $KernelName `
-        -SimpleMatch
+    $false
+
+if ($detailsTextSucceeded) {
+    $kernelFoundInDetails =
+        Test-TextFileContains `
+            -Path $detailsTextPath `
+            -Pattern $KernelName `
+            -SimpleMatch
+}
 
 $kernelFoundInRaw =
     Test-TextFileContains `
@@ -945,18 +1195,20 @@ $kernelFoundInSass =
 
 if (
     -not (
-        $kernelFoundInDetails -or
         $kernelFoundInRaw -or
         $kernelFoundInSass
     )
 ) {
     throw (
-        "The selected kernel name was not found in any imported " +
-        "report view: $KernelName"
+        "The selected kernel name was not found in the required " +
+        "raw or SASS report views: $KernelName"
     )
 }
 
-if (-not $kernelFoundInDetails) {
+if (
+    $detailsTextSucceeded -and
+    -not $kernelFoundInDetails
+) {
     $warnings.Add(
         "Kernel name was not found in details.txt: $KernelName"
     ) | Out-Null
@@ -974,11 +1226,10 @@ if (-not $kernelFoundInSass) {
     ) | Out-Null
 }
 
-
 $sourceSassContainsInstruction =
     Test-TextFileContains `
         -Path $sourceSassTextPath `
-        -Pattern '\b(CS2R|FFMA|S2R|MOV|EXIT|BRA)\b'
+        -Pattern '\b(CS2R|FFMA|S2R|MOV|EXIT|BRA|STG|LDG|ULDC)\b'
 
 if (-not $sourceSassContainsInstruction) {
     throw (
@@ -987,6 +1238,56 @@ if (-not $sourceSassContainsInstruction) {
     )
 }
 
+
+# =========================================================================
+# Detect Details rule-processing errors
+# =========================================================================
+
+$detailsContainsTraceback =
+    $false
+
+$detailsContainsEncodingError =
+    $false
+
+if (
+    $detailsTextSucceeded -and
+    (
+        Test-Path `
+            -LiteralPath $detailsTextPath `
+            -PathType Leaf
+    )
+) {
+    $detailsContainsTraceback =
+        Test-TextFileContains `
+            -Path $detailsTextPath `
+            -Pattern "Traceback (most recent call last):" `
+            -SimpleMatch
+
+    $detailsContainsEncodingError =
+        Test-TextFileContains `
+            -Path $detailsTextPath `
+            -Pattern "unknown encoding: utf-8-sig" `
+            -SimpleMatch
+}
+
+if ($detailsContainsTraceback) {
+    $warnings.Add(
+        "Python traceback was detected in details.txt. " +
+        "The NCU report remains usable through raw and source exports."
+    ) | Out-Null
+}
+
+if ($detailsContainsEncodingError) {
+    $warnings.Add(
+        "The Details rule environment reported " +
+        "'unknown encoding: utf-8-sig'. Raw and SASS exports remain usable."
+    ) | Out-Null
+}
+
+
+# =========================================================================
+# Validate CUDA source correlation
+# =========================================================================
 
 $cudaSourceCorrelationFound =
     $false
@@ -1015,7 +1316,111 @@ if ($cudaSassTextSucceeded) {
 
 
 # =========================================================================
-# Related manifests
+# Validate normalized canonical SASS listing
+# =========================================================================
+
+try {
+    $sassListingJson =
+        Get-Content `
+            -LiteralPath $sassInstructionJsonPath `
+            -Raw |
+        ConvertFrom-Json
+} catch {
+    throw (
+        "Failed to parse sass_instructions.json: " +
+        $_.Exception.Message
+    )
+}
+
+$instructionCountProperty =
+    $sassListingJson.PSObject.Properties[
+        "instruction_count"
+    ]
+
+$sourceMappedCountProperty =
+    $sassListingJson.PSObject.Properties[
+        "source_mapped_count"
+    ]
+
+$sourceTextCountProperty =
+    $sassListingJson.PSObject.Properties[
+        "source_text_count"
+    ]
+
+if (
+    $null -eq $instructionCountProperty -or
+    $null -eq $sourceMappedCountProperty -or
+    $null -eq $sourceTextCountProperty
+) {
+    throw (
+        "sass_instructions.json is missing one or more required " +
+        "summary properties."
+    )
+}
+
+$sassInstructionCount =
+    [int]$instructionCountProperty.Value
+
+$sassSourceMappedCount =
+    [int]$sourceMappedCountProperty.Value
+
+$sassSourceTextCount =
+    [int]$sourceTextCountProperty.Value
+
+if ($sassInstructionCount -le 0) {
+    throw (
+        "No canonical SASS instructions were extracted for " +
+        "$KernelName."
+    )
+}
+
+if ($sassSourceMappedCount -le 0) {
+    $warnings.Add(
+        "Canonical SASS instructions were extracted, but no " +
+        "CUDA source-line mapping was found."
+    ) | Out-Null
+}
+
+if ($sassSourceTextCount -le 0) {
+    $warnings.Add(
+        "CUDA source-line metadata exists, but source text could " +
+        "not be resolved from the current source tree."
+    ) | Out-Null
+}
+
+$timerCs2rCount =
+    0
+
+$opcodeCountsProperty =
+    $sassListingJson.PSObject.Properties[
+        "opcode_counts"
+    ]
+
+if ($null -ne $opcodeCountsProperty) {
+    $cs2rProperty =
+        $opcodeCountsProperty.Value.PSObject.Properties[
+            "CS2R"
+        ]
+
+    if ($null -ne $cs2rProperty) {
+        $timerCs2rCount =
+            [int]$cs2rProperty.Value
+    }
+}
+
+if (
+    $KernelName -eq "probe_timer_only" -and
+    $timerCs2rCount -lt 2
+) {
+    throw (
+        "probe_timer_only canonical SASS should contain at least " +
+        "two CS2R instructions. Found: $timerCs2rCount"
+    )
+}
+
+
+# =========================================================================
+# Related build and binary manifests
 # =========================================================================
 
 $relatedManifestRecords =
@@ -1046,7 +1451,9 @@ if (
         -LiteralPath $binaryManifestPath `
         -PathType Leaf
 ) {
-    $relatedManifestRecords["binary_collection_manifest"] =
+    $relatedManifestRecords[
+        "binary_collection_manifest"
+    ] =
         Get-ProfilerArtifactRecord `
             -Path $binaryManifestPath
 }
@@ -1058,17 +1465,75 @@ if (
 
 $outputPaths =
     [ordered]@{
-        report                = $reportPath
-        capture_console       = $captureConsolePath
-        details_text          = $detailsTextPath
-        details_csv           = $detailsCsvPath
-        raw_csv               = $rawCsvPath
-        source_sass_text      = $sourceSassTextPath
-        source_sass_csv       = $sourceSassCsvPath
-        source_cuda_sass_text = $sourceCudaSassTextPath
-        source_cuda_sass_csv  = $sourceCudaSassCsvPath
-        active_metrics        = $activeMetricsPath
+        report =
+            $reportPath
+
+        capture_console =
+            $captureConsolePath
+
+        raw_csv =
+            $rawCsvPath
+
+        source_sass_text =
+            $sourceSassTextPath
+
+        source_sass_csv =
+            $sourceSassCsvPath
+
+        canonical_sass_line_info =
+            $canonicalSassLineInfoPath
+
+        sass_instructions_csv =
+            $sassInstructionCsvPath
+
+        sass_instructions_text =
+            $sassInstructionTextPath
+
+        sass_instructions_json =
+            $sassInstructionJsonPath
+
+        sass_analyzer_console =
+            $sassAnalyzerConsolePath
+
+        active_metrics =
+            $activeMetricsPath
     }
+
+if (
+    Test-Path `
+        -LiteralPath $detailsTextPath `
+        -PathType Leaf
+) {
+    $outputPaths["details_text"] =
+        $detailsTextPath
+}
+
+if (
+    Test-Path `
+        -LiteralPath $detailsCsvPath `
+        -PathType Leaf
+) {
+    $outputPaths["details_csv"] =
+        $detailsCsvPath
+}
+
+if (
+    Test-Path `
+        -LiteralPath $sourceCudaSassTextPath `
+        -PathType Leaf
+) {
+    $outputPaths["source_cuda_sass_text"] =
+        $sourceCudaSassTextPath
+}
+
+if (
+    Test-Path `
+        -LiteralPath $sourceCudaSassCsvPath `
+        -PathType Leaf
+) {
+    $outputPaths["source_cuda_sass_csv"] =
+        $sourceCudaSassCsvPath
+}
 
 if ($sessionSucceeded) {
     $outputPaths["session_text"] =
@@ -1091,12 +1556,23 @@ foreach ($entry in $outputPaths.GetEnumerator()) {
 }
 
 
+# =========================================================================
+# Environment artifact records
+# =========================================================================
+
 $environmentPaths =
     [ordered]@{
-        ncu_version  = $ncuVersionPath
-        ncu_help     = $ncuHelpPath
-        ncu_sets     = $ncuSetsPath
-        ncu_sections = $ncuSectionsPath
+        ncu_version =
+            $ncuVersionPath
+
+        ncu_help =
+            $ncuHelpPath
+
+        ncu_sets =
+            $ncuSetsPath
+
+        ncu_sections =
+            $ncuSectionsPath
     }
 
 if (
@@ -1147,32 +1623,55 @@ $captureStatus =
 
 $captureManifest =
     [ordered]@{
-        schema_version = 1
+        schema_version = 3
         generated_at   = (Get-Date).ToString("o")
         status         = $captureStatus
 
         objective = (
-            "Establish a repeatable static-SASS and Nsight " +
-            "Compute report collection process."
+            "Establish a repeatable CUDA-source, canonical-SASS, " +
+            "and Nsight Compute correlation process."
         )
 
         kernel = [ordered]@{
-            requested_name   = $KernelName
-            name_base        = "function"
-            launch_count     = 1
-            filter_mode      = "global"
+            requested_name =
+                $KernelName
+
+            name_base =
+                "function"
+
+            launch_count =
+                1
+
+            filter_mode =
+                "global"
         }
 
         collection = [ordered]@{
-            mode             = $CollectionMode
-            description      = $collectionDescription
-            replay_mode      = "kernel"
-            cache_control    = "all"
-            clock_control    = $ClockControl
-            import_source    = $true
+            mode =
+                $CollectionMode
+
+            description =
+                $collectionDescription
+
+            replay_mode =
+                "kernel"
+
+            cache_control =
+                "all"
+
+            clock_control =
+                $ClockControl
+
+            import_source =
+                $true
+
+            details_rule_policy =
+                "ncu_default_rules_import_option_unavailable"
+
             source_folders_supported =
                 $supportsSourceFolders
-            source_folders   =
+
+            source_folders =
                 if ($supportsSourceFolders) {
                     @(
                         $srcDir
@@ -1184,8 +1683,11 @@ $captureManifest =
         }
 
         target_application = [ordered]@{
-            samples = $Samples
-            warmups = $Warmups
+            samples =
+                $Samples
+
+            warmups =
+                $Warmups
 
             runtime_arguments = @(
                 $profileRuntimeDir
@@ -1195,31 +1697,111 @@ $captureManifest =
         }
 
         executable = [ordered]@{
-            path       = $exeFile.FullName
-            size_bytes = $exeFile.Length
-            sha256     = $exeHashText
+            path =
+                $exeFile.FullName
+
+            size_bytes =
+                $exeFile.Length
+
+            sha256 =
+                $exeHashText
         }
 
-        ncu = [ordered]@{
-            path         = $ncuPath
-            version_text = $ncuVersionText
-            arguments    = $captureArguments
+        canonical_runtime_cubin = [ordered]@{
+            path =
+                $runtimeCubinFile.FullName
+
+            size_bytes =
+                $runtimeCubinFile.Length
+
+            sha256 =
+                $runtimeCubinHashText
+        }
+
+        tools = [ordered]@{
+            ncu_path =
+                $ncuPath
+
+            ncu_version_text =
+                $ncuVersionText
+
+            nvdisasm_path =
+                $nvdisasmPath
+
+            python_path =
+                $pythonPath
+
+            sass_listing_analyzer =
+                $sassListingAnalyzerPath
+        }
+
+        ncu_arguments =
+            $captureArguments
+
+        sass_listing = [ordered]@{
+            instruction_count =
+                $sassInstructionCount
+
+            source_mapped_count =
+                $sassSourceMappedCount
+
+            source_text_count =
+                $sassSourceTextCount
+
+            timer_cs2r_count =
+                $timerCs2rCount
         }
 
         validations = [ordered]@{
-            report_generated          = $true
-            kernel_found_in_details    = $kernelFoundInDetails
-            kernel_found_in_raw        = $kernelFoundInRaw
-            kernel_found_in_sass       = $kernelFoundInSass
-            sass_instruction_found     =
+            report_generated =
+                $true
+
+            details_text_exported =
+                $detailsTextSucceeded
+
+            details_csv_exported =
+                $detailsCsvSucceeded
+
+            kernel_found_in_details =
+                $kernelFoundInDetails
+
+            kernel_found_in_raw =
+                $kernelFoundInRaw
+
+            kernel_found_in_sass =
+                $kernelFoundInSass
+
+            ncu_sass_instruction_found =
                 $sourceSassContainsInstruction
-            cuda_sass_text_exported    =
+
+            cuda_sass_text_exported =
                 $cudaSassTextSucceeded
-            cuda_sass_csv_exported     =
+
+            cuda_sass_csv_exported =
                 $cudaSassCsvSucceeded
+
             cuda_source_correlation_found =
                 $cudaSourceCorrelationFound
-            session_exported           =
+
+            details_traceback_found =
+                $detailsContainsTraceback
+
+            details_encoding_error_found =
+                $detailsContainsEncodingError
+
+            canonical_sass_generated =
+                $true
+
+            canonical_sass_instruction_count =
+                $sassInstructionCount
+
+            canonical_source_mapping_found =
+                ($sassSourceMappedCount -gt 0)
+
+            canonical_source_text_found =
+                ($sassSourceTextCount -gt 0)
+
+            session_exported =
                 $sessionSucceeded
         }
 
@@ -1237,7 +1819,7 @@ $captureManifest =
     }
 
 $captureManifest |
-    ConvertTo-Json -Depth 12 |
+    ConvertTo-Json -Depth 14 |
     Set-Content `
         -LiteralPath $captureManifestPath `
         -Encoding UTF8
@@ -1260,21 +1842,48 @@ $finalColor =
 
 Write-Host ""
 Write-Host (
-    "Nsight Compute capture completed. " +
+    "Nsight Compute and SASS capture completed. " +
     "Status: $captureStatus"
 ) -ForegroundColor $finalColor
 
+Write-Host ""
+Write-Host "Capture configuration:"
 Write-Host "  Kernel               : $KernelName"
 Write-Host "  Collection mode      : $CollectionMode"
 Write-Host "  Collection           : $collectionDescription"
 Write-Host "  Launch count         : 1"
+Write-Host "  Samples              : $Samples"
+Write-Host "  Warmups              : $Warmups"
+
+Write-Host ""
+Write-Host "Artifact identity:"
 Write-Host "  Executable           : $exePath"
 Write-Host "  EXE SHA-256          : $exeHashText"
+Write-Host "  Runtime CUBIN        : $runtimeCubinPath"
+Write-Host "  CUBIN SHA-256        : $runtimeCubinHashText"
+
+Write-Host ""
+Write-Host "Nsight Compute outputs:"
 Write-Host "  NCU report           : $reportPath"
-Write-Host "  Details              : $detailsTextPath"
+Write-Host "  Details TXT success  : $detailsTextSucceeded"
+Write-Host "  Details CSV success  : $detailsCsvSucceeded"
 Write-Host "  Raw metrics          : $rawCsvPath"
-Write-Host "  SASS source          : $sourceSassTextPath"
+Write-Host "  NCU SASS             : $sourceSassTextPath"
+Write-Host "  CUDA-SASS success    : $cudaSassTextSucceeded"
 Write-Host "  CUDA-SASS source     : $sourceCudaSassTextPath"
+
+Write-Host ""
+Write-Host "Canonical SASS outputs:"
+Write-Host "  Full line-info SASS  : $canonicalSassLineInfoPath"
+Write-Host "  Instruction listing  : $sassInstructionTextPath"
+Write-Host "  Instruction CSV      : $sassInstructionCsvPath"
+Write-Host "  Instruction JSON     : $sassInstructionJsonPath"
+Write-Host "  Instruction count    : $sassInstructionCount"
+Write-Host "  Source-mapped count  : $sassSourceMappedCount"
+Write-Host "  Source-text count    : $sassSourceTextCount"
+
+Write-Host ""
+Write-Host "Capture metadata:"
 Write-Host "  Capture manifest     : $captureManifestPath"
 Write-Host "  Capture directory    : $captureDir"
 

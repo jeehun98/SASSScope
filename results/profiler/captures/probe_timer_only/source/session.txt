@@ -2,58 +2,47 @@ Launch Settings
 --------------------- ------------------------------------------------------------------------------------------------------------------------
 Launch Attribute      Value                                                                                                                   
 --------------------- ------------------------------------------------------------------------------------------------------------------------
-Profiler Command Line "C:\Program Files\NVIDIA Corporation\Nsight Compute 2025.3.1\\target\windows-desktop-win7-x64\ncu.exe" --target-processe
+Profiler Command Line "C:\Program Files\NVIDIA Corporation\Nsight Compute 2025.4.0\\target\windows-desktop-win7-x64\ncu.exe" --target-processe
                       s application-only --check-exit-code yes --filter-mode global --kernel-name-base function --kernel-name probe_timer_only
                        --launch-count 1 --replay-mode kernel --cache-control all --clock-control base --set basic --section SourceCounters --i
-                      mport-source yes --source-folders C:\Users\owner\Desktop\SASSScope\src,C:\Users\owner\Desktop\SASSScope\include --export
-                       C:\Users\owner\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\profile --force-overwrite C:\Users\o
-                      wner\Desktop\SASSScope\build\probe_ffma.exe C:\Users\owner\Desktop\SASSScope\results\profiler\captures\probe_timer_only\
-                      source\runtime 1 0                                                                                                      
+                      mport-source yes --source-folders C:\Users\as042\OneDrive\Desktop\SASSScope\src,C:\Users\as042\OneDrive\Desktop\SASSScop
+                      e\include --export C:\Users\as042\OneDrive\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\profile -
+                      -force-overwrite C:\Users\as042\OneDrive\Desktop\SASSScope\build\probe_ffma.exe C:\Users\as042\OneDrive\Desktop\SASSScop
+                      e\results\profiler\captures\probe_timer_only\source\runtime 1 0                                                         
 
 Session Info
 ---------------------- ------------------------------------------------------------------------------------------------------------------------
 Session Attribute      Value                                                                                                                   
 ---------------------- ------------------------------------------------------------------------------------------------------------------------
-Created                2026-Jul-19 15:00:29                                                                                                    
-Host Name              LAPTOP-F1C7NHJG                                                                                                         
-Host OS                Windows 11 (24H2) - 26200                                                                                               
+Created                2026-Jul-20 06:11:24                                                                                                    
+Host Name              JHKIM                                                                                                                   
+Host OS                Windows 11 (23H2) - 10.0.22631                                                                                          
 Host Architecture      x64                                                                                                                     
-Host Processor         12th Gen Intel(R) Core(TM) i9-12900H                                                                                    
-Target Name            LAPTOP-F1C7NHJG                                                                                                         
-Target IP Addresses    fe80::2f5b:c8b:c59e:eff1, 169.254.237.175, fe80::c5c8:8cc1:aee6:6bfb, 169.254.149.100, fe80::df34:e9db:efba:2996, 169.25
-                       4.233.80, fe80::7882:37e4:d5ba:774f, 172.20.10.2                                                                        
-Target OS              Windows 11 (24H2) - 26200                                                                                               
+Host Processor         AMD Ryzen 5 5600X 6-Core Processor                                                                                      
+Target Name            JHKIM                                                                                                                   
+Target IP Addresses    2406:5900:1111:c15d:e6e2:eb2b:5ac1:7d06, 2406:5900:1111:c15d:fc73:622d:7b8b:8748, fe80::240f:b38d:af85:2d15, 192.168.219
+                       .105                                                                                                                    
+Target OS              Windows 11 (23H2) - 10.0.22631                                                                                          
 Target Architecture    x64                                                                                                                     
-Target Processor       12th Gen Intel(R) Core(TM) i9-12900H                                                                                    
+Target Processor       AMD Ryzen 5 5600X 6-Core Processor                                                                                      
 CUDA Version           13.0                                                                                                                    
-Display Driver Version 581.57                                                                                                                  
+Display Driver Version 581.80                                                                                                                  
 PerfWorks              0.1.0                                                                                                                   
-Nsight Compute Target  2025.3.1.0 (build 36398880) (public-release)                                                                            
+Nsight Compute Target  2025.4.0.0 (build 36690805) (public-release)                                                                            
 
 Processes
----------- -----------------------------------------------------
-Process Id Process Name                                         
----------- -----------------------------------------------------
-16824      C:\Users\owner\Desktop\SASSScope\build\probe_ffma.exe
+---------- --------------------------------------------------------------
+Process Id Process Name                                                  
+---------- --------------------------------------------------------------
+21308      C:\Users\as042\OneDrive\Desktop\SASSScope\build\probe_ffma.exe
 
 Device Attributes
---------------------------- -------------------------------------
-Device Attribute            Device 0                             
---------------------------- -------------------------------------
-confidential_computing_mode No-CC                                
-multiprocessor_count        58                                   
-display_name                NVIDIA GeForce RTX 3080 Ti Laptop GPU
-compute_capability_major    8                                    
-compute_capability_minor    6                                    
-total_memory                17179344896                          
-Traceback (most recent call last):
-  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
-  File "<frozen importlib._bootstrap>", line 1176, in exec_module
-  File "<frozen site>", line 635, in <module>
-  File "<frozen site>", line 621, in main
-  File "<frozen site>", line 364, in addusersitepackages
-  File "<frozen site>", line 247, in addsitedir
-  File "<frozen site>", line 190, in addpackage
-LookupError: unknown encoding: utf-8-sig
+--------------------------- -----------------------
+Device Attribute            Device 0               
+--------------------------- -----------------------
+confidential_computing_mode No-CC                  
+multiprocessor_count        28                     
+display_name                NVIDIA GeForce RTX 3060
+compute_capability_major    8                      
+compute_capability_minor    6                      
+total_memory                12884377600            

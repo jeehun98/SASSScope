@@ -1,20 +1,20 @@
-[16824] probe_ffma.exe@127.0.0.1
+[21308] probe_ffma.exe@127.0.0.1
   probe_timer_only (1, 1, 1)x(1, 1, 1), Context 1, Stream 7, Device 0, CC 8.6
     Section: GPU Speed Of Light Throughput
     ----------------------- ----------- ----------------
     Metric Name             Metric Unit     Metric Value
     ----------------------- ----------- ----------------
-    DRAM Frequency                   hz 4,861,111,111.11
-    SM Frequency                     hz   569,263,599.54
-    Elapsed Cycles                cycle            2,626
-    Memory Throughput                 %             0.94
-    DRAM Throughput                   %             0.19
-    Duration                         ns            4,608
-    L1/TEX Cache Throughput           %            79.00
+    DRAM Frequency                   hz 7,256,830,601.09
+    SM Frequency                     hz 1,298,326,502.73
+    Elapsed Cycles                cycle            2,536
+    Memory Throughput                 %             1.34
+    DRAM Throughput                   %             0.51
+    Duration                         ns            1,952
+    L1/TEX Cache Throughput           %            37.58
     Waves Per SM                                    0.00
-    L2 Cache Throughput               %             0.94
-    SM Active Cycles              cycle            15.19
-    Compute (SM) Throughput           %             0.00
+    L2 Cache Throughput               %             1.34
+    SM Active Cycles              cycle            31.93
+    Compute (SM) Throughput           %             0.01
     ----------------------- ----------- ----------------
 
     GPU Throughput Chart
@@ -22,8 +22,8 @@
     ---------------- ----------- ------------
     Metric Name      Metric Unit Metric Value
     ---------------- ----------- ------------
-    Memory [%]                 %         0.94
-    Compute (SM) [%]           %         0.00
+    Memory [%]                 %         1.34
+    Compute (SM) [%]           %         0.01
     ---------------- ----------- ------------
 
     GPU Throughput Breakdown
@@ -31,17 +31,17 @@
     -------------------------------------------- ----------- ------------
     Metric Name                                  Metric Unit Metric Value
     -------------------------------------------- ----------- ------------
+    SM: Inst Executed                                      %         0.01
+    SM: Inst Executed Pipe Lsu                             %         0.01
+    SM: Issue Active                                       %         0.01
     IDC: Request Cycles Active                             %            0
-    SM: Inst Executed                                      %         0.00
     SM: Inst Executed Pipe Adu                             %         0.00
     SM: Inst Executed Pipe Cbu Pred On Any                 %         0.00
     SM: Inst Executed Pipe Ipa                             %            0
-    SM: Inst Executed Pipe Lsu                             %         0.00
     SM: Inst Executed Pipe Tex                             %            0
     SM: Inst Executed Pipe Uniform                         %         0.00
     SM: Inst Executed Pipe Xu                              %            0
     SM: Instruction Throughput Internal Activity           %            0
-    SM: Issue Active                                       %         0.00
     SM: Memory Throughput Internal Activity                %            0
     SM: Mio2rf Writeback Active                            %         0.00
     SM: Mio Inst Issued                                    %         0.00
@@ -58,17 +58,18 @@
     -------------------------------------------------------- ----------- ------------
     Metric Name                                              Metric Unit Metric Value
     -------------------------------------------------------- ----------- ------------
-    L2: T Sectors                                                      %         0.94
-    L2: Lts2xbar Cycles Active                                         %         0.72
-    L1: Texin Sm2tex Req Cycles Active                                 %         0.44
-    GPU: Compute Memory Access Throughput Internal Activity            %         0.29
-    L2: Xbar2lts Cycles Active                                         %         0.29
-    L2: T Tag Requests                                                 %         0.28
-    DRAM: Cycles Active                                                %         0.19
-    DRAM: Dram Sectors                                                 %         0.19
-    L2: D Sectors                                                      %         0.15
-    L2: D Sectors Fill Device                                          %         0.10
-    L1: M L1tex2xbar Req Cycles Active                                 %         0.08
+    L2: Lts2xbar Cycles Active                                         %         1.34
+    L2: T Sectors                                                      %         1.03
+    L2: D Sectors Fill Device                                          %         0.76
+    DRAM: Cycles Active                                                %         0.51
+    L1: Texin Sm2tex Req Cycles Active                                 %         0.48
+    L2: T Tag Requests                                                 %         0.46
+    DRAM: Dram Sectors                                                 %         0.38
+    L2: Xbar2lts Cycles Active                                         %         0.35
+    GPU: Compute Memory Access Throughput Internal Activity            %         0.33
+    L2: D Sectors                                                      %         0.17
+    L1: M L1tex2xbar Req Cycles Active                                 %         0.09
+    L1: Lsuin Requests                                                 %         0.01
     GPU: Compute Memory Request Throughput Internal Activity           %            0
     L1: Data Bank Reads                                                %         0.00
     L1: Data Bank Writes                                               %         0.00
@@ -76,14 +77,13 @@
     L1: Data Pipe Tex Wavefronts                                       %            0
     L1: F Wavefronts                                                   %            0
     L1: Lsu Writeback Active                                           %         0.00
-    L1: Lsuin Requests                                                 %         0.00
     L1: M Xbar2l1tex Read Sectors                                      %            0
     L1: Tex Writeback Active                                           %            0
     L2: D Atomic Input Cycles Active                                   %            0
     L2: D Sectors Fill Sysmem                                          %            0
     -------------------------------------------------------- ----------- ------------
 
-    OPT   This kernel grid is too small to fill the available resources on this device, resulting in only 0.0 full      
+    OPT   This kernel grid is too small to fill the available resources on this device, resulting in only 0.00 full     
           waves across all SMs. Look at Launch Statistics for more details.                                             
 
     Section: Launch Statistics
@@ -98,10 +98,10 @@
     Driver Shared Memory Per Block        byte/block           1,024
     Dynamic Shared Memory Per Block       byte/block               0
     Static Shared Memory Per Block        byte/block               0
-    # SMs                                         SM              58
+    # SMs                                         SM              28
     Stack Size                                                 1,024
     Threads                                   thread               1
-    # TPCs                                                        29
+    # TPCs                                                        14
     Enabled TPC IDs                                              all
     Uses Green Context                                             0
     Waves Per SM                                                0.00
@@ -119,13 +119,13 @@
           (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for more      
           details on launch configurations.                                                                             
     ----- --------------------------------------------------------------------------------------------------------------
-    OPT   Est. Speedup: 98.28%                                                                                          
-          The grid for this launch is configured to execute only 1 block, which is less than the GPU's 58               
-          multiprocessors. This can underutilize some multiprocessors. If you do not intend to execute this kernel      
-          concurrently with other workloads, consider reducing the block size to have at least one block per            
-          multiprocessor or increase the size of the grid to fully utilize the available hardware resources. See the    
-          Hardware Model (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model)            
-          description for more details on launch configurations.                                                        
+    OPT   Est. Speedup: 96.43%                                                                                          
+          The grid for this launch is configured to execute only 1 block, which is less than the 28 multiprocessors     
+          used. This can underutilize some multiprocessors. If you do not intend to execute this kernel concurrently    
+          with other workloads, consider reducing the block size to have at least one block per multiprocessor or       
+          increase the size of the grid to fully utilize the available hardware resources. See the Hardware Model       
+          (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for more      
+          details on launch configurations.                                                                             
 
     Section: Occupancy
     ------------------------------- ----------- ------------
@@ -342,42 +342,42 @@
     -------------------------- ----------- ------------
     Metric Name                Metric Unit Metric Value
     -------------------------- ----------- ------------
-    Average DRAM Active Cycles       cycle           42
-    Total DRAM Elapsed Cycles        cycle      179,200
-    Average L1 Active Cycles         cycle        15.19
-    Total L1 Elapsed Cycles          cycle      157,182
-    Average L2 Active Cycles         cycle       107.84
-    Total L2 Elapsed Cycles          cycle       86,176
-    Average SM Active Cycles         cycle        15.19
-    Total SM Elapsed Cycles          cycle      157,182
-    Average SMSP Active Cycles       cycle         3.71
-    Total SMSP Elapsed Cycles        cycle      628,728
+    Average DRAM Active Cycles       cycle           72
+    Total DRAM Elapsed Cycles        cycle       84,992
+    Average L1 Active Cycles         cycle        31.93
+    Total L1 Elapsed Cycles          cycle       69,692
+    Average L2 Active Cycles         cycle       203.67
+    Total L2 Elapsed Cycles          cycle       42,984
+    Average SM Active Cycles         cycle        31.93
+    Total SM Elapsed Cycles          cycle       69,692
+    Average SMSP Active Cycles       cycle         7.50
+    Total SMSP Elapsed Cycles        cycle      278,768
     -------------------------- ----------- ------------
 
     Table Name : Workload Distribution
     ------------------ ----------- ------------
     Metric Name        Metric Unit Metric Value
     ------------------ ----------- ------------
-    DRAM Active Cycles       cycle           42
-    DRAM Active Cycles       cycle          128
-    DRAM Active Cycles       cycle            0
-    DRAM Active Cycles       cycle          336
-    L1 Active Cycles         cycle        15.19
-    L1 Active Cycles         cycle          881
+    DRAM Active Cycles       cycle           72
+    DRAM Active Cycles       cycle          160
+    DRAM Active Cycles       cycle           16
+    DRAM Active Cycles       cycle          432
+    L1 Active Cycles         cycle        31.93
+    L1 Active Cycles         cycle          894
     L1 Active Cycles         cycle            0
-    L1 Active Cycles         cycle          881
-    L2 Active Cycles         cycle       107.84
-    L2 Active Cycles         cycle          330
+    L1 Active Cycles         cycle          894
+    L2 Active Cycles         cycle       203.67
+    L2 Active Cycles         cycle          453
     L2 Active Cycles         cycle           37
-    L2 Active Cycles         cycle        3,451
-    SM Active Cycles         cycle        15.19
-    SM Active Cycles         cycle          881
+    L2 Active Cycles         cycle        3,666
+    SM Active Cycles         cycle        31.93
+    SM Active Cycles         cycle          894
     SM Active Cycles         cycle            0
-    SM Active Cycles         cycle          881
-    SMSP Active Cycles       cycle         3.71
-    SMSP Active Cycles       cycle          860
+    SM Active Cycles         cycle          894
+    SMSP Active Cycles       cycle         7.50
+    SMSP Active Cycles       cycle          840
     SMSP Active Cycles       cycle            0
-    SMSP Active Cycles       cycle          860
+    SMSP Active Cycles       cycle          840
     ------------------ ----------- ------------
 
     Section: Source Counters
@@ -392,12 +392,12 @@
     L1 Wavefronts Shared Excessive                                                                                                   0
     L2 Theoretical Sectors Global Excessive                                                                          byte            0
     Branch Instructions Ratio                                                                                           %         0.11
-    Elapsed Cycles                                                                                                  cycle        2,626
+    Elapsed Cycles                                                                                                  cycle        2,536
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_barrier)                                     warp            0
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_branch_resolving)                        branches            0
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_dispatch_stall)                              warp            0
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_drain)                                       warp            0
-    Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_imc_miss)                                    warp            1
+    Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_imc_miss)                                    warp            0
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_lg_throttle)                                 warp            0
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_long_scoreboard)                             warp            0
     Warp Stall Sampling (All Samples) (smsp__pcsamp_warps_issue_stalled_math_pipe_throttle)                          warp            0
@@ -415,7 +415,7 @@
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_branch_resolving_not_issued)      branches            0
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_dispatch_stall_not_issued)            warp            0
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_drain_not_issued)                     warp            0
-    Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_imc_miss_not_issued)                  warp            1
+    Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_imc_miss_not_issued)                  warp            0
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_lg_throttle_not_issued)               warp            0
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_long_scoreboard_not_issued)           warp            0
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_math_pipe_throttle_not_issued)        warp            0
@@ -430,10 +430,10 @@
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_tex_throttle_not_issued)              warp            0
     Warp Stall Sampling (Not-issued Samples) (smsp__pcsamp_warps_issue_stalled_wait_not_issued)                      warp            0
     Instructions Executed                                                                                            inst           18
-    L1 Active Cycles                                                                                                cycle          881
-    L1 Elapsed Cycles                                                                                               cycle      157,182
-    L2 Active Cycles                                                                                                cycle        3,451
-    L2 Elapsed Cycles                                                                                               cycle       86,176
+    L1 Active Cycles                                                                                                cycle          894
+    L1 Elapsed Cycles                                                                                               cycle       69,692
+    L2 Active Cycles                                                                                                cycle        3,666
+    L2 Elapsed Cycles                                                                                               cycle       42,984
     Access Size                                                                                                                      0
     Access Operation                                                                                                                 0
     L1 Tag Requests Global                                                                                        sectors            2
@@ -446,7 +446,7 @@
     Divergent Branches                                                                                           branches            0
     Executed Instructions                                                                                            inst           18
     Branch Instructions                                                                                              inst            2
-    # Samples                                                                                                                        1
+    # Samples                                                                                                                        0
     stall_barrier                                                                                                    warp            0
     stall_barrier (Not Issued)                                                                                       warp            0
     stall_branch_resolving                                                                                       branches            0
@@ -455,8 +455,8 @@
     stall_dispatch (Not Issued)                                                                                      warp            0
     stall_drain                                                                                                      warp            0
     stall_drain (Not Issued)                                                                                         warp            0
-    stall_imc                                                                                                        warp            1
-    stall_imc (Not Issued)                                                                                           warp            1
+    stall_imc                                                                                                        warp            0
+    stall_imc (Not Issued)                                                                                           warp            0
     stall_lg                                                                                                         warp            0
     stall_lg (Not Issued)                                                                                            warp            0
     stall_long_sb                                                                                                    warp            0
@@ -497,29 +497,29 @@
     --------------------------------------------------------------------------------------------------------- ----------- ------------
 
     Hotspot Locations
-    Table Name : Warp Stall Sampling (All Samples)
-    --------------------------------------------------- ----------- ------------
-    Metric Name                                         Metric Unit Metric Value
-    --------------------------------------------------- ----------- ------------
-    smsp__pcsamp_warps_issue_stalled_barrier                   warp            0
-    smsp__pcsamp_warps_issue_stalled_branch_resolving      branches            0
-    smsp__pcsamp_warps_issue_stalled_dispatch_stall            warp            0
-    smsp__pcsamp_warps_issue_stalled_drain                     warp            0
-    smsp__pcsamp_warps_issue_stalled_imc_miss                  warp            1
-    smsp__pcsamp_warps_issue_stalled_lg_throttle               warp            0
-    smsp__pcsamp_warps_issue_stalled_long_scoreboard           warp            0
-    smsp__pcsamp_warps_issue_stalled_math_pipe_throttle        warp            0
-    smsp__pcsamp_warps_issue_stalled_membar                    byte            0
-    smsp__pcsamp_warps_issue_stalled_mio_throttle              warp            0
-    smsp__pcsamp_warps_issue_stalled_misc                      warp            0
-    smsp__pcsamp_warps_issue_stalled_no_instructions           warp            0
-    smsp__pcsamp_warps_issue_stalled_not_selected              warp            0
-    smsp__pcsamp_warps_issue_stalled_selected                  warp            0
-    smsp__pcsamp_warps_issue_stalled_short_scoreboard          warp            0
-    smsp__pcsamp_warps_issue_stalled_sleeping                  warp            0
-    smsp__pcsamp_warps_issue_stalled_tex_throttle              warp            0
-    smsp__pcsamp_warps_issue_stalled_wait                      warp            0
-    --------------------------------------------------- ----------- ------------
+    Table Name : Warp Stall Sampling (Not-issued Samples)
+    -------------------------------------------------------------- ----------- ------------
+    Metric Name                                                    Metric Unit Metric Value
+    -------------------------------------------------------------- ----------- ------------
+    smsp__pcsamp_warps_issue_stalled_barrier_not_issued                   warp            0
+    smsp__pcsamp_warps_issue_stalled_branch_resolving_not_issued      branches            0
+    smsp__pcsamp_warps_issue_stalled_dispatch_stall_not_issued            warp            0
+    smsp__pcsamp_warps_issue_stalled_drain_not_issued                     warp            0
+    smsp__pcsamp_warps_issue_stalled_imc_miss_not_issued                  warp            0
+    smsp__pcsamp_warps_issue_stalled_lg_throttle_not_issued               warp            0
+    smsp__pcsamp_warps_issue_stalled_long_scoreboard_not_issued           warp            0
+    smsp__pcsamp_warps_issue_stalled_math_pipe_throttle_not_issued        warp            0
+    smsp__pcsamp_warps_issue_stalled_membar_not_issued                    byte            0
+    smsp__pcsamp_warps_issue_stalled_mio_throttle_not_issued              warp            0
+    smsp__pcsamp_warps_issue_stalled_misc_not_issued                      warp            0
+    smsp__pcsamp_warps_issue_stalled_no_instructions_not_issued           warp            0
+    smsp__pcsamp_warps_issue_stalled_not_selected_not_issued              warp            0
+    smsp__pcsamp_warps_issue_stalled_selected_not_issued                  warp            0
+    smsp__pcsamp_warps_issue_stalled_short_scoreboard_not_issued          warp            0
+    smsp__pcsamp_warps_issue_stalled_sleeping_not_issued                  warp            0
+    smsp__pcsamp_warps_issue_stalled_tex_throttle_not_issued              warp            0
+    smsp__pcsamp_warps_issue_stalled_wait_not_issued                      warp            0
+    -------------------------------------------------------------- ----------- ------------
 
     Table Name : Most Instructions Executed
     --------------------- ----------- ------------
@@ -528,14 +528,5 @@
     Instructions Executed        inst           18
     --------------------- ----------- ------------
 
-Traceback (most recent call last):
-  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
-  File "<frozen importlib._bootstrap>", line 1176, in exec_module
-  File "<frozen site>", line 635, in <module>
-  File "<frozen site>", line 621, in main
-  File "<frozen site>", line 364, in addusersitepackages
-  File "<frozen site>", line 247, in addsitedir
-  File "<frozen site>", line 190, in addpackage
-LookupError: unknown encoding: utf-8-sig
+    WRN   Sampling metrics were enabled, but no samples could be collected for this kernel.                             
+

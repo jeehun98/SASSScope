@@ -1,4 +1,4 @@
-Device NVIDIA GeForce RTX 3080 Ti Laptop GPU (GA103)
+Device NVIDIA GeForce RTX 3060 (GA106)
 --------------------------------------------------------------------------- --------------- --------------- ----------------------------------------------------------------------
 Metric Name                                                                 Metric Type     Metric Unit     Metric Description                                                    
 --------------------------------------------------------------------------- --------------- --------------- ----------------------------------------------------------------------
@@ -4597,14 +4597,3 @@ tpc__warps_active_shader_cs                                                 Coun
 tpc__warps_active_shader_cs_realtime                                        Counter         warp            cumulative # of active CS warps                                       
 ==PROF== Note that these metrics must be appended with a valid suffix before profiling them. See --help for more information on --query-metrics-mode.
 
-Traceback (most recent call last):
-  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
-  File "<frozen importlib._bootstrap>", line 1176, in exec_module
-  File "<frozen site>", line 635, in <module>
-  File "<frozen site>", line 621, in main
-  File "<frozen site>", line 364, in addusersitepackages
-  File "<frozen site>", line 247, in addsitedir
-  File "<frozen site>", line 190, in addpackage
-LookupError: unknown encoding: utf-8-sig

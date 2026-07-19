@@ -1,6 +1,6 @@
 ﻿{
     "schema_version":  1,
-    "generated_at":  "2026-07-18T14:59:21.9512829+09:00",
+    "generated_at":  "2026-07-20T06:05:19.5734461+09:00",
     "architecture":  "sm_86",
     "required_kernels":  [
                              "probe_timer_only",
@@ -9,20 +9,20 @@
                          ],
     "selected":  {
                      "name":  "probe_kernels.sm_86.cubin",
-                     "source_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\probe_kernels.sm_86.cubin",
-                     "copied_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\probe_ffma_runtime_sm86.cubin",
-                     "size_bytes":  16808,
-                     "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909",
+                     "source_path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\probe_kernels.sm_86.cubin",
+                     "copied_path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\probe_ffma_runtime_sm86.cubin",
+                     "size_bytes":  17576,
+                     "sha256":  "f06940a4de6ab3f612dd44b6def57332b8c89f9a502a3faed6ad8c6c7b660504",
                      "preference_score":  1010,
-                     "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\probe_kernels.sm_86.sass.txt"
+                     "sass_path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\probe_kernels.sm_86.sass.txt"
                  },
     "candidates":  [
                        {
                            "name":  "main-probe_kernels.sm_86.cubin",
-                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\main-probe_kernels.sm_86.cubin",
-                           "size_bytes":  872,
-                           "sha256":  "a17f1237474a5e7d40b576f4418372bd40594f7487cc971cf6a706d17998a824",
-                           "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\main-probe_kernels.sm_86.sass.txt",
+                           "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\main-probe_kernels.sm_86.cubin",
+                           "size_bytes":  1328,
+                           "sha256":  "41007ccedf279f86d047de68f14aa09afd9e98da2aa30fce807137a97ff35588",
+                           "sass_path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\main-probe_kernels.sm_86.sass.txt",
                            "found_kernel_names":  [
 
                                                   ],
@@ -36,10 +36,10 @@
                        },
                        {
                            "name":  "main.sm_86.cubin",
-                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\main.sm_86.cubin",
-                           "size_bytes":  1424,
-                           "sha256":  "05250fbe0bd187e0dae50e6ec250de4b55500ca343d98214eaf4c4df5f34a165",
-                           "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\main.sm_86.sass.txt",
+                           "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\main.sm_86.cubin",
+                           "size_bytes":  1944,
+                           "sha256":  "92472e60bb494bd130dedff2ddd3230279bdeb4fd6c47f89f8c093b16bb528bf",
+                           "sass_path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\main.sm_86.sass.txt",
                            "found_kernel_names":  [
 
                                                   ],
@@ -53,10 +53,10 @@
                        },
                        {
                            "name":  "probe_kernels.sm_86.cubin",
-                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\probe_kernels.sm_86.cubin",
-                           "size_bytes":  16808,
-                           "sha256":  "7652581158796d8cf47a9e973f87112d22872d202b23e6bffc54d67219885909",
-                           "sass_path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\probe_kernels.sm_86.sass.txt",
+                           "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_embedded\\probe_kernels.sm_86.cubin",
+                           "size_bytes":  17576,
+                           "sha256":  "f06940a4de6ab3f612dd44b6def57332b8c89f9a502a3faed6ad8c6c7b660504",
+                           "sass_path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\runtime_candidate_inspection\\probe_kernels.sm_86.sass.txt",
                            "found_kernel_names":  [
                                                       "probe_timer_only",
                                                       "probe_dependent_ffma",

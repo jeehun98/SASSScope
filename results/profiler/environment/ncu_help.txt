@@ -164,6 +164,8 @@ Common Profile Options:
                                           (query NUMA topology metrics)
                                           nvlink
                                           (query metrics related to NVLink)
+                                          occupancy
+                                          (query metrics for occupancy calculations)
                                           pmsampling
                                           (query metrics available for pm sampling)
                                           profiling (default)
@@ -190,7 +192,11 @@ Common Profile Options:
                                           none
   --clock-control arg (=base)           Control the behavior of the GPU clocks during profiling. Allowed values:
                                           base
-                                          (Lock GPU clocks to base)
+                                          (Lock GPU clocks to base/rated tdp)
+                                          boost
+                                          (Lock clocks to turbo boost, fallback to base if not supported)
+                                          force-boost
+                                          (Lock clocks to turbo boost)
                                           none
                                           (Don't lock clocks)
                                           reset
@@ -290,12 +296,12 @@ Filter Profile Options:
                                         selecting kernels to profile based on python CPU stack frames.
 
 PM Sampling Options:
-  --pm-sampling-interval arg (=0)       Set the PM sampling interval in cycles or ns (depending on the architecture), 
-                                        or determine dynamically when 0.
-  --pm-sampling-buffer-size arg (=0)    Set the size of the device-sided allocation for PM sampling in bytes, or 
-                                        determine dynamically when 0.
-  --pm-sampling-max-passes arg (=0)     Set the maximum number of passes used for PM sampling, or determine dynamically
-                                        when 0.
+  --pm-sampling-interval arg (=0)       Set PM sampling interval in cycles/ns (0: auto-determine)
+  --pm-sampling-buffer-size arg (=0)    Set device-side PM sampling buffer size in bytes (0: auto-determine)
+  --pm-sampling-max-passes arg (=0)     Set maximum passes for PM sampling (0: auto-determine)
+  --warp-samples-per-interval arg (=0)  Set warp samples per PM sampling interval (0: auto-determine)
+  --disable-pm-warp-sampling            Disables warp state sampling during PM sampling. If enabled (default), warp 
+                                        state sampling is performed in addition to PM sampling.
 
 Warp State Sampling Options:
   --warp-sampling-interval arg (=auto)  Set the warp state sampling period in the range of [0..31]. Actual frequency is
@@ -383,6 +389,23 @@ Console Output Options:
                                           per-gpu
                                           per-kernel
                                           per-nvtx.
+
+Multi-process Communicator Options:
+  --communicator arg (=none)            Set multiprocess communicator mode:
+                                          none
+                                          tcp
+  --communicator-tcp-hostname arg (=127.0.0.1)
+                                        Set hostname / ip address for communicator TCP server
+  --communicator-tcp-port arg (=49217)  Set port for communicator TCP server
+  --communicator-tcp-num-peers arg (=2) Number of expected TCP server peers
+  --lockstep-kernel-launch              Launch kernels in lockstep across all peer NCU processes. Makes sure each 
+                                        kernel is launched the same number of times to satisfy inter-kernel 
+                                        communication and synchronization
+  --lockstep-nvtx-include arg           Adds include statement to the NVTX filter, for kernels to be synchronized
+  --lockstep-nvtx-exclude arg           Adds exclude statement to the NVTX filter, for kernels to be synchronized
+
+Metric Distributor Option:
+  --metric-distribution-groups arg (=1) Set the number of groups to distribute metrics to. Default is 1.
 
 Use the --mode switch to select how to use the tool:
   Launch and profile a Cuda application:

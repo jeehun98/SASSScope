@@ -1,2 +1,4 @@
 
 	code for sm_86
+	.target	sm_86
+

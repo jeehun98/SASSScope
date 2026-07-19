@@ -105,8 +105,7 @@ cd C:\Users\owner\Desktop\SASSScope
 # 5. 도구 확인
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-    -File scripts\check_tools.ps1
+powershell -ExecutionPolicy Bypass     -File scripts\check_tools.ps1
 ```
 
 확인 대상:
@@ -130,10 +129,7 @@ ncu           선택
 RTX 3070 등 compute capability 8.6 장치에서는 다음을 실행한다.
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-    -File scripts\build.ps1 `
-    -Arch 86 `
-    -Clean
+powershell -ExecutionPolicy Bypass     -File scripts\build.ps1     -Arch 86     -Clean
 ```
 
 ## 6.1 생성 artifact

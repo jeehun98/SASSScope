@@ -2,10 +2,10 @@
 Fatbin elf code:
 ================
 arch = sm_86
-code version = [1,7]
+code version = [1,8]
 host = windows
 compile_size = 64bit
-identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu 
+identifier = C:/Users/as042/OneDrive/Desktop/SASSScope/src/main.cu C:/Users/as042/OneDrive/Desktop/SASSScope/src/probe_kernels.cu 
 
 Resource usage:
  Common:
@@ -14,10 +14,10 @@ Resource usage:
 Fatbin elf code:
 ================
 arch = sm_86
-code version = [1,7]
+code version = [1,8]
 host = windows
 compile_size = 64bit
-identifier = C:/Users/owner/Desktop/SASSScope/src/main.cu
+identifier = C:/Users/as042/OneDrive/Desktop/SASSScope/src/main.cu
 
 Resource usage:
  Common:
@@ -26,10 +26,10 @@ Resource usage:
 Fatbin elf code:
 ================
 arch = sm_86
-code version = [1,7]
+code version = [1,8]
 host = windows
 compile_size = 64bit
-identifier = C:/Users/owner/Desktop/SASSScope/src/probe_kernels.cu
+identifier = C:/Users/as042/OneDrive/Desktop/SASSScope/src/probe_kernels.cu
 
 Resource usage:
  Common:

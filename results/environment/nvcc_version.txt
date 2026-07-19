@@ -1,5 +1,5 @@
 nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2024 NVIDIA Corporation
-Built on Wed_Oct_30_01:18:48_Pacific_Daylight_Time_2024
-Cuda compilation tools, release 12.6, V12.6.85
-Build cuda_12.6.r12.6/compiler.35059454_0
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Fri_Nov__7_19:25:04_Pacific_Standard_Time_2025
+Cuda compilation tools, release 13.1, V13.1.80
+Build cuda_13.1.r13.1/compiler.36836380_0

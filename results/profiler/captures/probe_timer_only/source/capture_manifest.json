@@ -1,8 +1,8 @@
 ﻿{
-    "schema_version":  1,
-    "generated_at":  "2026-07-19T15:00:40.3215508+09:00",
+    "schema_version":  3,
+    "generated_at":  "2026-07-20T06:11:32.3612011+09:00",
     "status":  "PASS",
-    "objective":  "Establish a repeatable static-SASS and Nsight Compute report collection process.",
+    "objective":  "Establish a repeatable CUDA-source, canonical-SASS, and Nsight Compute correlation process.",
     "kernel":  {
                    "requested_name":  "probe_timer_only",
                    "name_base":  "function",
@@ -16,175 +16,223 @@
                        "cache_control":  "all",
                        "clock_control":  "base",
                        "import_source":  true,
+                       "details_rule_policy":  "ncu_default_rules_import_option_unavailable",
                        "source_folders_supported":  true,
                        "source_folders":  [
-                                              "C:\\Users\\owner\\Desktop\\SASSScope\\src",
-                                              "C:\\Users\\owner\\Desktop\\SASSScope\\include"
+                                              "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\src",
+                                              "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\include"
                                           ]
                    },
     "target_application":  {
                                "samples":  1,
                                "warmups":  0,
                                "runtime_arguments":  [
-                                                         "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\runtime",
+                                                         "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\runtime",
                                                          "1",
                                                          "0"
                                                      ]
                            },
     "executable":  {
-                       "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\build\\probe_ffma.exe",
-                       "size_bytes":  503808,
-                       "sha256":  "eaaa7fd3ce4c7b278e6161e4a045617867281db4e9da71466278284de0358747"
+                       "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\build\\probe_ffma.exe",
+                       "size_bytes":  367104,
+                       "sha256":  "274f31d4c06bb58ba20c4480090fda0ec4b1d70493d3a34f68dc91ab50e87b4c"
                    },
-    "ncu":  {
-                "path":  "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2025.3.1\\ncu.bat",
-                "version_text":  "NVIDIA (R) Nsight Compute Command Line Profiler\r\nCopyright (c) 2018-2025 NVIDIA Corporation\r\nVersion 2025.3.1.0 (build 36398880) (public-release)",
-                "arguments":  [
-                                  "--target-processes",
-                                  "application-only",
-                                  "--check-exit-code",
-                                  "yes",
-                                  "--filter-mode",
-                                  "global",
-                                  "--kernel-name-base",
-                                  "function",
-                                  "--kernel-name",
-                                  "probe_timer_only",
-                                  "--launch-count",
-                                  "1",
-                                  "--replay-mode",
-                                  "kernel",
-                                  "--cache-control",
-                                  "all",
-                                  "--clock-control",
-                                  "base",
-                                  "--set",
-                                  "basic",
-                                  "--section",
-                                  "SourceCounters",
-                                  "--import-source",
-                                  "yes",
-                                  "--source-folders",
-                                  "C:\\Users\\owner\\Desktop\\SASSScope\\src,C:\\Users\\owner\\Desktop\\SASSScope\\include",
-                                  "--export",
-                                  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\profile",
-                                  "--force-overwrite",
-                                  "C:\\Users\\owner\\Desktop\\SASSScope\\build\\probe_ffma.exe",
-                                  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\runtime",
-                                  "1",
-                                  "0"
-                              ]
-            },
+    "canonical_runtime_cubin":  {
+                                    "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\probe_ffma_runtime_sm86.cubin",
+                                    "size_bytes":  17576,
+                                    "sha256":  "f06940a4de6ab3f612dd44b6def57332b8c89f9a502a3faed6ad8c6c7b660504"
+                                },
+    "tools":  {
+                  "ncu_path":  "C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2025.4.0\\ncu.bat",
+                  "ncu_version_text":  "NVIDIA (R) Nsight Compute Command Line Profiler\r\nCopyright (c) 2018-2025 NVIDIA Corporation\r\nVersion 2025.4.0.0 (build 36690805) (public-release)",
+                  "nvdisasm_path":  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.1\\bin\\nvdisasm.exe",
+                  "python_path":  "C:\\Users\\as042\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                  "sass_listing_analyzer":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\tools\\extract_sass_listing.py"
+              },
+    "ncu_arguments":  [
+                          "--target-processes",
+                          "application-only",
+                          "--check-exit-code",
+                          "yes",
+                          "--filter-mode",
+                          "global",
+                          "--kernel-name-base",
+                          "function",
+                          "--kernel-name",
+                          "probe_timer_only",
+                          "--launch-count",
+                          "1",
+                          "--replay-mode",
+                          "kernel",
+                          "--cache-control",
+                          "all",
+                          "--clock-control",
+                          "base",
+                          "--set",
+                          "basic",
+                          "--section",
+                          "SourceCounters",
+                          "--import-source",
+                          "yes",
+                          "--source-folders",
+                          "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\src,C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\include",
+                          "--export",
+                          "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\profile",
+                          "--force-overwrite",
+                          "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\build\\probe_ffma.exe",
+                          "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\runtime",
+                          "1",
+                          "0"
+                      ],
+    "sass_listing":  {
+                         "instruction_count":  32,
+                         "source_mapped_count":  32,
+                         "source_text_count":  32,
+                         "timer_cs2r_count":  2
+                     },
     "validations":  {
                         "report_generated":  true,
+                        "details_text_exported":  true,
+                        "details_csv_exported":  true,
                         "kernel_found_in_details":  true,
                         "kernel_found_in_raw":  true,
                         "kernel_found_in_sass":  true,
-                        "sass_instruction_found":  true,
+                        "ncu_sass_instruction_found":  true,
                         "cuda_sass_text_exported":  true,
                         "cuda_sass_csv_exported":  true,
                         "cuda_source_correlation_found":  true,
+                        "details_traceback_found":  false,
+                        "details_encoding_error_found":  false,
+                        "canonical_sass_generated":  true,
+                        "canonical_sass_instruction_count":  32,
+                        "canonical_source_mapping_found":  true,
+                        "canonical_source_text_found":  true,
                         "session_exported":  true
                     },
     "related_manifests":  {
                               "build_manifest":  {
-                                                     "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\build\\build_manifest.json",
-                                                     "size_bytes":  7329,
-                                                     "sha256":  "c5a1c866ea8b7a48217f06d92672729ac9fe96bad35dae0472ac062d50761d6d"
+                                                     "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\build\\build_manifest.json",
+                                                     "size_bytes":  7529,
+                                                     "sha256":  "a59cd62b538fe0eea2c88bc98492f6873931d09c8d68c2015e771246623b837b"
                                                  },
                               "binary_collection_manifest":  {
-                                                                 "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\binary\\binary_collection_manifest.json",
-                                                                 "size_bytes":  4977,
-                                                                 "sha256":  "689dac90b6a94946db9f72ac6c5f4ade34027d6bcfacd4eb41bea2f77cf1a7ff"
+                                                                 "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\binary\\binary_collection_manifest.json",
+                                                                 "size_bytes":  5107,
+                                                                 "sha256":  "fa0334355f5ec7f08c9fd5f3418594f1888b9fd5d855bd9263591a5bc7967e8a"
                                                              }
                           },
     "environment":  {
                         "ncu_version":  {
-                                            "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_version.txt",
+                                            "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_version.txt",
                                             "size_bytes":  147,
-                                            "sha256":  "850ce81fd6107310c7d8ed424c93cbbf1055f8852b75ff93406da293c34e729c"
+                                            "sha256":  "c0fb7115ec3aa696884409204604a261b5706ea1aced896b6196a4d5d22e029a"
                                         },
                         "ncu_help":  {
-                                         "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_help.txt",
-                                         "size_bytes":  33532,
-                                         "sha256":  "42be422878ba967d716425c546809585eb5668164b07705d22211128b89bbdf6"
+                                         "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_help.txt",
+                                         "size_bytes":  35213,
+                                         "sha256":  "06be8ec195c2ba392d0c8dec8899c45f7d0d8365bf33eda3a9a281e876bdf5e4"
                                      },
                         "ncu_sets":  {
-                                         "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_sets.txt",
-                                         "size_bytes":  2889,
-                                         "sha256":  "87221c102eac6d772f3d92f82167979e5bdf49cdb196016c454ae0675e6a6df6"
+                                         "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_sets.txt",
+                                         "size_bytes":  2280,
+                                         "sha256":  "ccece7cf65716dfd41898e030e7f8d0e81502dfa27d875d917e5e9cd69ce34b8"
                                      },
                         "ncu_sections":  {
-                                             "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_sections.txt",
-                                             "size_bytes":  5226,
-                                             "sha256":  "655e7f9bd8fb67446043f079353fdfb0725f8b9ab7206513e9f5548368997078"
+                                             "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_sections.txt",
+                                             "size_bytes":  4788,
+                                             "sha256":  "422bc945995d079000b3598bfaf3e50e79e8d4ecc51eafe4eb688b3f6d373481"
                                          },
                         "ncu_metrics":  {
-                                            "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_metrics.txt",
-                                            "size_bytes":  830664,
-                                            "sha256":  "622e78de8dd983e7ba66362d7a8524e69b63ce8774f81e7fb8df1f09722fbe57"
+                                            "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\environment\\ncu_metrics.txt",
+                                            "size_bytes":  830041,
+                                            "sha256":  "e3443a342625c9a491802113d38f4e8af4dbd04fb2c6d4779e9dc6e7281e2425"
                                         },
                         "gpu_info":  {
-                                         "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\gpu_info.txt",
-                                         "size_bytes":  10829,
-                                         "sha256":  "340cebff79dab4420da008f1aa9fa0da97743ee1777cce19c65ee58ef513fd4e"
+                                         "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\environment\\gpu_info.txt",
+                                         "size_bytes":  17624,
+                                         "sha256":  "f2315de58b46ba880fbe38f02be636722b647da2a583f269729ad7401f4635f9"
                                      }
                     },
     "outputs":  {
                     "report":  {
-                                   "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\profile.ncu-rep",
-                                   "size_bytes":  122434,
-                                   "sha256":  "628ef56b17cd1e0e6020cfd33e0d84925df18846bd8193c0a06533780e7131ac"
+                                   "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\profile.ncu-rep",
+                                   "size_bytes":  122900,
+                                   "sha256":  "fe490ee1402bb40aecc95346e98c370ec15abb20db1beddd4748071cf727e3bb"
                                },
                     "capture_console":  {
-                                            "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\capture_console.txt",
-                                            "size_bytes":  2691,
-                                            "sha256":  "2866db3eb876eb6388f06df91b8ac18020cc171f44ad62642bccbbfb0d0fd3d9"
+                                            "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\capture_console.txt",
+                                            "size_bytes":  2095,
+                                            "sha256":  "97b69c4621cb29b56251d41498cf0fa56350ed8d5bd6d94428e6ec529c1bcd01"
                                         },
-                    "details_text":  {
-                                         "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\details.txt",
-                                         "size_bytes":  45874,
-                                         "sha256":  "77d90cbc26a5d797574a54ffdc6a6ff328c418457cd09fb548fecb02ab8a6ddc"
-                                     },
-                    "details_csv":  {
-                                        "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\details.csv",
-                                        "size_bytes":  55847,
-                                        "sha256":  "5b99a3c768cb8df7f2a42d7cf068ac52b2184202aeab3e920dcb661aa36a92c6"
-                                    },
                     "raw_csv":  {
-                                    "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\raw.csv",
-                                    "size_bytes":  36175,
-                                    "sha256":  "25913b68432e58d0e61589de06427d2d718c17c1228c6cea18bfe66091837f3d"
+                                    "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\raw.csv",
+                                    "size_bytes":  35912,
+                                    "sha256":  "3409024d0688a21808cbdb4475228b2da4259bed07bff974ae47b03a4562e37b"
                                 },
                     "source_sass_text":  {
-                                             "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_sass.txt",
-                                             "size_bytes":  21021,
-                                             "sha256":  "716f9d1eb7ae972f0a8bce9f4d464b480145c30e3eac3719257275671074d017"
+                                             "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_sass.txt",
+                                             "size_bytes":  9534,
+                                             "sha256":  "06d00017f5b2a5a59233cf32bbbe9cc1cee2b321e760643c05a067aee5370685"
                                          },
                     "source_sass_csv":  {
-                                            "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_sass.csv",
-                                            "size_bytes":  11168,
-                                            "sha256":  "a5c89ee62cbda0abf10ed20d80a9124177a773a5be6910b86806a67350d5bd32"
+                                            "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_sass.csv",
+                                            "size_bytes":  5036,
+                                            "sha256":  "089f8893d521536b1e05cbc5f9579581909726cb986fe13a50d6a14bcc5f9cf3"
                                         },
+                    "canonical_sass_line_info":  {
+                                                     "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\canonical_sass_lineinfo.txt",
+                                                     "size_bytes":  99284,
+                                                     "sha256":  "d6a8e3d7120da94b50ae00101da13d4c02d81a6d8b358e619d199da6e4c8a88e"
+                                                 },
+                    "sass_instructions_csv":  {
+                                                  "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\sass_instructions.csv",
+                                                  "size_bytes":  8019,
+                                                  "sha256":  "02aa8836a1958bcbf96218b98bc946826241cc8616357de8e21b60f612c91e4d"
+                                              },
+                    "sass_instructions_text":  {
+                                                   "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\sass_instructions.txt",
+                                                   "size_bytes":  2900,
+                                                   "sha256":  "21f90a7563a458bf4c61dec7f8f9d5ef2990cbba1d6c89c93ab4919b2622aa83"
+                                               },
+                    "sass_instructions_json":  {
+                                                   "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\sass_instructions.json",
+                                                   "size_bytes":  18641,
+                                                   "sha256":  "5765a3f8dc7780e76b3a84b2c5db5ae90a6eaea9ac46dfa3762af47597653b52"
+                                               },
+                    "sass_analyzer_console":  {
+                                                  "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\sass_instruction_analyzer_console.txt",
+                                                  "size_bytes":  418,
+                                                  "sha256":  "f5cd2352f3764d507ca1eba428922f8fc13868ef96f899d9905c8bd7907601e1"
+                                              },
+                    "active_metrics":  {
+                                           "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\active_metrics.txt",
+                                           "size_bytes":  22111,
+                                           "sha256":  "0746ad431ee3916f741fa08b375c825c7d3d04ff3cda15c269071e2c3b999011"
+                                       },
+                    "details_text":  {
+                                         "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\details.txt",
+                                         "size_bytes":  45638,
+                                         "sha256":  "4057da6771086bda94589497907df1546d744a98d937a39720272e03aa7820d8"
+                                     },
+                    "details_csv":  {
+                                        "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\details.csv",
+                                        "size_bytes":  55806,
+                                        "sha256":  "39e94e17484a2703870282c2aba6db02db2908f31eaa307bf4bc64312931d68b"
+                                    },
                     "source_cuda_sass_text":  {
-                                                  "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_cuda_sass.txt",
-                                                  "size_bytes":  66856,
-                                                  "sha256":  "2834e45188c397a131610608523f52c5b6ccc39f886dade7c46a9b953d142c4c"
+                                                  "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_cuda_sass.txt",
+                                                  "size_bytes":  32068,
+                                                  "sha256":  "3d8fc36dc1c921eb6a7c696bf9485a1f76807dddba8c63795d79ea539e749bd6"
                                               },
                     "source_cuda_sass_csv":  {
-                                                 "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_cuda_sass.csv",
-                                                 "size_bytes":  16763,
-                                                 "sha256":  "c73b55d177fef3db907d9f97bbf687b4b51fc2c0493e37816d66b90a968e386e"
+                                                 "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_cuda_sass.csv",
+                                                 "size_bytes":  7828,
+                                                 "sha256":  "e6816af854b81a2f229c02ea1bf5218b0b12ff5ab5c85a89bee1f64af530f0af"
                                              },
-                    "active_metrics":  {
-                                           "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\active_metrics.txt",
-                                           "size_bytes":  22720,
-                                           "sha256":  "9ab9822f7b95e559b767403bad0cacc2a8c137cbd593095a32e57444205241d5"
-                                       },
                     "session_text":  {
-                                         "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\session.txt",
-                                         "size_bytes":  5593,
-                                         "sha256":  "e9711dbb2a6711bcc6e2daea6d7d8f8281cf77254eefbc82fb2018463c89ee3b"
+                                         "path":  "C:\\Users\\as042\\OneDrive\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\session.txt",
+                                         "size_bytes":  4894,
+                                         "sha256":  "039cfd5d61c17526e4d8d040a4761db1b1bc7bb2c6e8284e9a91de1cda981a7d"
                                      }
                 },
     "warnings":  [

@@ -1,0 +1,4 @@
+Extracted 32 SASS instructions for probe_timer_only.
+CSV : C:\Users\as042\OneDrive\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\sass_instructions.csv
+Text: C:\Users\as042\OneDrive\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\sass_instructions.txt
+JSON: C:\Users\as042\OneDrive\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\sass_instructions.json

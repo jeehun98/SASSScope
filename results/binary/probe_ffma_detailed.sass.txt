@@ -1,4 +1,6 @@
-	.headerflags	@"EF_CUDA_TEXMODE_UNIFIED EF_CUDA_64BIT_ADDRESS EF_CUDA_SM86 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM86)"
+nvdisasm info    : Options --print-line-info and its variants are ignored when printing register life range
+	.target	sm_86
+
 	.elftype	@"ET_EXEC"
 
 
