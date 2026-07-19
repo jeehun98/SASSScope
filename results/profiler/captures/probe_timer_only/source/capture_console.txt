@@ -1,4 +1,4 @@
-==PROF== Connected to process 25388 (C:\Users\owner\Desktop\SASSScope\build\probe_ffma.exe)
+==PROF== Connected to process 16824 (C:\Users\owner\Desktop\SASSScope\build\probe_ffma.exe)
 ==PROF== Profiling "probe_timer_only": 0%....50%....100% - 11 passes
 GPU                  : NVIDIA GeForce RTX 3080 Ti Laptop GPU
 Compute capability   : sm_86
@@ -50,7 +50,7 @@ Independent checksum               : 8.035650
 Checksums finite                   : true
 
 Results written to: C:\Users\owner\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\runtime
-==PROF== Disconnected from process 25388
+==PROF== Disconnected from process 16824
 ==PROF== Report: C:\Users\owner\Desktop\SASSScope\results\profiler\captures\probe_timer_only\source\profile.ncu-rep
 Traceback (most recent call last):
   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load

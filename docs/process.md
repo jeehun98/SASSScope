@@ -800,8 +800,7 @@ CUDA launch/synchronization 오류가 없는지
 Nsight Compute는 선택 단계다.
 
 ```powershell
-powershell -ExecutionPolicy Bypass `
-    -File scripts\profile_ncu.ps1
+powershell -ExecutionPolicy Bypass     -File scripts\profile_ncu.ps1     -KernelName probe_timer_only     -CollectionMode Source     -Samples 1     -Warmups 0
 ```
 
 ## 16.1 생성 파일

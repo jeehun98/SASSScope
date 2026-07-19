@@ -1,6 +1,6 @@
 ﻿{
     "schema_version":  1,
-    "generated_at":  "2026-07-18T15:53:48.8339615+09:00",
+    "generated_at":  "2026-07-19T15:00:40.3215508+09:00",
     "status":  "PASS",
     "objective":  "Establish a repeatable static-SASS and Nsight Compute report collection process.",
     "kernel":  {
@@ -126,35 +126,35 @@
                                         },
                         "gpu_info":  {
                                          "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\environment\\gpu_info.txt",
-                                         "size_bytes":  10825,
-                                         "sha256":  "f99d79b5c4f98f7cf3a43bbc9f211a4d62e069772a15915afe64f4e4800fa38c"
+                                         "size_bytes":  10829,
+                                         "sha256":  "340cebff79dab4420da008f1aa9fa0da97743ee1777cce19c65ee58ef513fd4e"
                                      }
                     },
     "outputs":  {
                     "report":  {
                                    "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\profile.ncu-rep",
                                    "size_bytes":  122434,
-                                   "sha256":  "12bba4ed4c986fce2678c9d942f791a5b5beef55c11076d658e263e6e4ce9db2"
+                                   "sha256":  "628ef56b17cd1e0e6020cfd33e0d84925df18846bd8193c0a06533780e7131ac"
                                },
                     "capture_console":  {
                                             "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\capture_console.txt",
                                             "size_bytes":  2691,
-                                            "sha256":  "c2d4bdf5d3c5938595afca76a146bb15c8226ee9da0e462965949ae453301ce0"
+                                            "sha256":  "2866db3eb876eb6388f06df91b8ac18020cc171f44ad62642bccbbfb0d0fd3d9"
                                         },
                     "details_text":  {
                                          "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\details.txt",
                                          "size_bytes":  45874,
-                                         "sha256":  "0e2711018ca495a10a34b8586c1d9042ee4fc2dbab1661bf77c55032c99143c8"
+                                         "sha256":  "77d90cbc26a5d797574a54ffdc6a6ff328c418457cd09fb548fecb02ab8a6ddc"
                                      },
                     "details_csv":  {
                                         "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\details.csv",
                                         "size_bytes":  55847,
-                                        "sha256":  "f11bf7bd84215a73ef1aa40966582bf51dcd04337840bae62ab8fd016280069d"
+                                        "sha256":  "5b99a3c768cb8df7f2a42d7cf068ac52b2184202aeab3e920dcb661aa36a92c6"
                                     },
                     "raw_csv":  {
                                     "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\raw.csv",
                                     "size_bytes":  36175,
-                                    "sha256":  "1d3a414d8ad70861f9a951469c47f7f2c0a7e20c63237d99464d949765738dca"
+                                    "sha256":  "25913b68432e58d0e61589de06427d2d718c17c1228c6cea18bfe66091837f3d"
                                 },
                     "source_sass_text":  {
                                              "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\source_sass.txt",
@@ -184,7 +184,7 @@
                     "session_text":  {
                                          "path":  "C:\\Users\\owner\\Desktop\\SASSScope\\results\\profiler\\captures\\probe_timer_only\\source\\session.txt",
                                          "size_bytes":  5593,
-                                         "sha256":  "79245316b180abe671e7498e76db8237de054835a51b5153d5919607e47f6249"
+                                         "sha256":  "e9711dbb2a6711bcc6e2daea6d7d8f8281cf77254eefbc82fb2018463c89ee3b"
                                      }
                 },
     "warnings":  [

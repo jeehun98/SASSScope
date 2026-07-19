@@ -14,14 +14,14 @@ Session Info
 ---------------------- ------------------------------------------------------------------------------------------------------------------------
 Session Attribute      Value                                                                                                                   
 ---------------------- ------------------------------------------------------------------------------------------------------------------------
-Created                2026-Jul-18 15:53:38                                                                                                    
+Created                2026-Jul-19 15:00:29                                                                                                    
 Host Name              LAPTOP-F1C7NHJG                                                                                                         
 Host OS                Windows 11 (24H2) - 26200                                                                                               
 Host Architecture      x64                                                                                                                     
 Host Processor         12th Gen Intel(R) Core(TM) i9-12900H                                                                                    
 Target Name            LAPTOP-F1C7NHJG                                                                                                         
 Target IP Addresses    fe80::2f5b:c8b:c59e:eff1, 169.254.237.175, fe80::c5c8:8cc1:aee6:6bfb, 169.254.149.100, fe80::df34:e9db:efba:2996, 169.25
-                       4.233.80, fe80::7882:37e4:d5ba:774f, 192.168.0.48                                                                       
+                       4.233.80, fe80::7882:37e4:d5ba:774f, 172.20.10.2                                                                        
 Target OS              Windows 11 (24H2) - 26200                                                                                               
 Target Architecture    x64                                                                                                                     
 Target Processor       12th Gen Intel(R) Core(TM) i9-12900H                                                                                    
@@ -34,7 +34,7 @@ Processes
 ---------- -----------------------------------------------------
 Process Id Process Name                                         
 ---------- -----------------------------------------------------
-25388      C:\Users\owner\Desktop\SASSScope\build\probe_ffma.exe
+16824      C:\Users\owner\Desktop\SASSScope\build\probe_ffma.exe
 
 Device Attributes
 --------------------------- -------------------------------------

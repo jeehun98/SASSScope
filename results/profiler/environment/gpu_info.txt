@@ -1,7 +1,7 @@
 
 ==============NVSMI LOG==============
 
-Timestamp                                 : Sat Jul 18 15:53:34 2026
+Timestamp                                 : Sun Jul 19 15:00:25 2026
 Driver Version                            : 581.57
 CUDA Version                              : 13.0
 
@@ -88,21 +88,21 @@ GPU 00000000:01:00.0
         Atomic Caps Outbound              : N/A
         Atomic Caps Inbound               : N/A
     Fan Speed                             : N/A
-    Performance State                     : P0
+    Performance State                     : P3
     Clocks Event Reasons
-        Idle                              : Active
+        Idle                              : Not Active
         Applications Clocks Setting       : Not Active
-        SW Power Cap                      : Not Active
+        SW Power Cap                      : Active
         HW Slowdown                       : Not Active
             HW Thermal Slowdown           : Not Active
             HW Power Brake Slowdown       : Not Active
         Sync Boost                        : Not Active
-        SW Thermal Slowdown               : Not Active
+        SW Thermal Slowdown               : Active
         Display Clock Setting             : Not Active
     Clocks Event Reasons Counters
-        SW Power Capping                  : 0 us
+        SW Power Capping                  : 60125 us
         Sync Boost                        : 0 us
-        SW Thermal Slowdown               : 0 us
+        SW Thermal Slowdown               : 78460 us
         HW Thermal Slowdown               : 0 us
         HW Power Braking                  : 0 us
     Sparse Operation Mode                 : N/A
@@ -169,7 +169,7 @@ GPU 00000000:01:00.0
         Pending Page Blacklist            : N/A
     Remapped Rows                         : N/A
     Temperature
-        GPU Current Temp                  : 63 C
+        GPU Current Temp                  : 56 C
         GPU T.Limit Temp                  : N/A
         GPU Shutdown Temp                 : 99 C
         GPU Slowdown Temp                 : 96 C
@@ -179,9 +179,9 @@ GPU 00000000:01:00.0
         Memory Max Operating Temp         : N/A
     GPU Power Readings
         Average Power Draw                : 1.00 W
-        Instantaneous Power Draw          : 27.10 W
-        Current Power Limit               : 89.20 W
-        Requested Power Limit             : 89.20 W
+        Instantaneous Power Draw          : 24.54 W
+        Current Power Limit               : 55.00 W
+        Requested Power Limit             : 55.00 W
         Default Power Limit               : 80.00 W
         Min Power Limit                   : 1.00 W
         Max Power Limit                   : 120.00 W
@@ -203,8 +203,8 @@ GPU 00000000:01:00.0
     Clocks
         Graphics                          : 1125 MHz
         SM                                : 1125 MHz
-        Memory                            : 7001 MHz
-        Video                             : 1102 MHz
+        Memory                            : 5001 MHz
+        Video                             : 1087 MHz
     Applications Clocks
         Graphics                          : N/A
         Memory                            : N/A
