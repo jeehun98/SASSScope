@@ -1,3 +1,0 @@
-ELF file    1: main-probe_kernels.sm_86.cubin
-ELF file    2: main.sm_86.cubin
-ELF file    3: probe_kernels.sm_86.cubin

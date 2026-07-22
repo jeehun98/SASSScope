@@ -1,3 +1,0 @@
-Extracting ELF file    1: main-probe_kernels.sm_86.cubin
-Extracting ELF file    2: main.sm_86.cubin
-Extracting ELF file    3: probe_kernels.sm_86.cubin
